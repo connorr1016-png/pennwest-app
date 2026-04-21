@@ -2,162 +2,187 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Penn West Tree — Employee Portal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Penn West Tree</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --forest: #1a2e1a; --bark: #3d2b1f; --moss: #2d4a2d; --leaf: #4a7c3f;
-  --lime: #7ab648; --amber: #c8841a; --amber-light: #f0a93c;
-  --cream: #f5f0e8; --parchment: #ede6d6; --rust: #8b3a1e;
-  --text: #1a1a14; --text-muted: #5a5a4a; --border: rgba(26,46,26,0.18);
-  --card-bg: #ffffff; --bg: #f0ebe0; --danger: #c0392b; --success: #27ae60;
+  --forest:#1a2e1a; --bark:#3d2b1f; --moss:#2d4a2d; --leaf:#4a7c3f;
+  --lime:#7ab648; --amber:#c8841a; --amber-light:#f0a93c;
+  --cream:#f5f0e8; --parchment:#ede6d6; --rust:#8b3a1e;
+  --text:#1a1a14; --text-muted:#5a5a4a; --border:rgba(26,46,26,0.15);
+  --card:#ffffff; --bg:#f0ebe0; --danger:#c0392b; --success:#27ae60;
+  --nav-h:64px; --header-h:56px;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'IBM Plex Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; background-image: repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(26,46,26,0.04) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(26,46,26,0.04) 40px); }
-.app-header { background: var(--forest); color: var(--cream); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 60px; border-bottom: 3px solid var(--lime); position: sticky; top: 0; z-index: 100; }
-.logo { display: flex; align-items: center; gap: 12px; }
-.logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; line-height: 1; }
-.logo-sub { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--lime); font-weight: 500; }
-.header-right { display: flex; align-items: center; gap: 16px; }
-.user-chip { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.08); padding: 6px 12px; border-radius: 20px; font-size: 13px; border: 1px solid rgba(255,255,255,0.12); }
-.user-avatar { width: 26px; height: 26px; border-radius: 50%; background: var(--lime); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--forest); }
-.btn-logout { background: transparent; border: 1px solid rgba(255,255,255,0.25); color: var(--cream); padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 12px; font-family: 'IBM Plex Sans', sans-serif; letter-spacing: 1px; text-transform: uppercase; transition: background 0.15s; }
-.btn-logout:hover { background: rgba(255,255,255,0.1); }
-.login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--forest); padding: 24px; }
-.login-card { background: var(--cream); border-radius: 4px; padding: 48px; width: 100%; max-width: 400px; border-top: 5px solid var(--lime); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
-.login-logo { display: flex; flex-direction: column; align-items: center; margin-bottom: 32px; gap: 8px; }
-.login-title { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 4px; color: var(--forest); text-align: center; line-height: 1; }
-.login-tagline { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--leaf); font-weight: 500; }
-.form-label { display: block; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
-.form-input { width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 3px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; background: white; color: var(--text); transition: border-color 0.15s; margin-bottom: 16px; }
-.form-input:focus { outline: none; border-color: var(--leaf); }
-.btn-primary { width: 100%; padding: 13px; background: var(--forest); color: var(--cream); border: none; border-radius: 3px; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 3px; cursor: pointer; margin-top: 8px; transition: background 0.15s; }
-.btn-primary:hover { background: var(--moss); }
-.login-hint { text-align: center; margin-top: 20px; font-size: 12px; color: var(--text-muted); font-family: 'IBM Plex Mono', monospace; }
-.login-error { background: #fde8e8; border: 1px solid #f5a5a5; color: var(--danger); padding: 10px 14px; border-radius: 3px; font-size: 13px; margin-bottom: 12px; text-align: center; }
-.app-layout { display: flex; min-height: calc(100vh - 60px); }
-.sidebar { width: 220px; background: var(--forest); color: var(--cream); flex-shrink: 0; padding: 20px 0; display: flex; flex-direction: column; }
-.nav-section { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.3); padding: 16px 20px 6px; font-weight: 600; }
-.nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 20px; cursor: pointer; font-size: 13px; color: rgba(255,255,255,0.7); transition: all 0.15s; border-left: 3px solid transparent; }
-.nav-item:hover { background: rgba(255,255,255,0.06); color: white; }
-.nav-item.active { background: rgba(122,182,72,0.12); color: var(--lime); border-left-color: var(--lime); }
-.nav-icon { font-size: 14px; width: 16px; text-align: center; }
-.sidebar-footer { margin-top: auto; padding: 16px 20px; border-top: 1px solid rgba(255,255,255,0.08); }
-.weather-chip { background: rgba(255,255,255,0.06); border-radius: 4px; padding: 10px 12px; font-size: 12px; color: rgba(255,255,255,0.6); }
-.weather-temp { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--cream); letter-spacing: 1px; }
-.main-content { flex: 1; overflow-y: auto; padding: 28px; }
-.page-header { margin-bottom: 24px; }
-.page-title { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 3px; color: var(--forest); line-height: 1; }
-.page-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
-.card { background: var(--card-bg); border-radius: 4px; border: 1px solid var(--border); padding: 20px 24px; margin-bottom: 16px; }
-.card-title { font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px; }
-.stats-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap: 12px; margin-bottom: 20px; }
-.stat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 18px 20px; border-top: 3px solid var(--leaf); }
-.stat-card.amber { border-top-color: var(--amber); }
-.stat-card.rust { border-top-color: var(--rust); }
-.stat-card.bark { border-top-color: var(--bark); }
-.stat-value { font-family: 'Bebas Neue', sans-serif; font-size: 36px; letter-spacing: 2px; color: var(--forest); line-height: 1; }
-.stat-label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.form-group-inline { margin-bottom: 14px; }
-.form-select { width: 100%; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 3px; font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; background: white; color: var(--text); cursor: pointer; }
-.form-select:focus { outline: none; border-color: var(--leaf); }
-.form-textarea { width: 100%; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 3px; font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; background: white; color: var(--text); resize: vertical; min-height: 80px; }
-.form-textarea:focus { outline: none; border-color: var(--leaf); }
-.btn-submit { padding: 11px 28px; background: var(--leaf); color: white; border: none; border-radius: 3px; font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.15s; }
-.btn-submit:hover { background: var(--moss); }
-.btn-secondary { padding: 10px 20px; background: transparent; color: var(--text-muted); border: 1.5px solid var(--border); border-radius: 3px; font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; cursor: pointer; margin-right: 8px; transition: all 0.15s; }
-.btn-secondary:hover { border-color: var(--leaf); color: var(--leaf); }
-.btn-danger { padding: 8px 16px; background: transparent; color: var(--danger); border: 1.5px solid var(--danger); border-radius: 3px; font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; cursor: pointer; transition: all 0.15s; }
-.btn-danger:hover { background: var(--danger); color: white; }
-.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.data-table th { text-align: left; font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); padding: 8px 12px; border-bottom: 2px solid var(--border); }
-.data-table td { padding: 11px 12px; border-bottom: 1px solid rgba(26,46,26,0.07); color: var(--text); }
-.data-table tr:hover td { background: rgba(122,182,72,0.04); }
-.badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
-.badge-green { background: #e8f5e9; color: #2e7d32; }
-.badge-amber { background: #fff8e1; color: #f57f17; }
-.badge-red { background: #fde8e8; color: var(--danger); }
-.badge-blue { background: #e3f2fd; color: #1565c0; }
-.badge-gray { background: #f5f5f5; color: #616161; }
-.badge-purple { background: #f3e5f5; color: #6a1b9a; }
-.success-msg { background: #e8f5e9; border: 1px solid #a5d6a7; color: #2e7d32; padding: 12px 16px; border-radius: 3px; font-size: 13px; margin-bottom: 14px; }
-.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
-.hidden { display: none !important; }
-.job-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 16px 20px; margin-bottom: 10px; display: flex; align-items: flex-start; gap: 16px; transition: box-shadow 0.15s; }
-.job-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
-.job-icon { width: 40px; height: 40px; background: var(--forest); border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-.job-title { font-weight: 600; font-size: 14px; color: var(--text); }
-.job-detail { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
-.job-detail span { margin-right: 14px; }
-.announcement { background: var(--forest); color: var(--cream); border-radius: 4px; padding: 16px 20px; margin-bottom: 10px; border-left: 4px solid var(--lime); }
-.announcement.warn { border-left-color: var(--amber-light); background: var(--bark); }
-.ann-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
-.ann-body { font-size: 13px; opacity: 0.75; }
-.ann-date { font-size: 11px; opacity: 0.5; margin-top: 8px; font-family: 'IBM Plex Mono', monospace; }
-.chat-messages { max-height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; padding: 4px 0; }
-.msg { padding: 10px 14px; border-radius: 4px; font-size: 13px; line-height: 1.6; max-width: 90%; }
-.msg.user { background: var(--forest); color: var(--cream); align-self: flex-end; border-radius: 4px 4px 0 4px; }
-.msg.assistant { background: var(--parchment); color: var(--text); align-self: flex-start; border-radius: 4px 4px 4px 0; border: 1px solid var(--border); }
-.chat-input-row { display: flex; gap: 8px; }
-.chat-input { flex: 1; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 3px; font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; background: white; }
-.chat-input:focus { outline: none; border-color: var(--leaf); }
-.btn-send { padding: 10px 18px; background: var(--forest); color: var(--cream); border: none; border-radius: 3px; cursor: pointer; font-size: 13px; font-weight: 500; transition: background 0.15s; }
-.btn-send:hover { background: var(--moss); }
-.btn-send:disabled { opacity: 0.5; cursor: not-allowed; }
-.map-container { width: 100%; height: 340px; border-radius: 4px; border: 1px solid var(--border); overflow: hidden; background: #e8e0d0; display: flex; align-items: center; justify-content: center; }
-.map-container iframe { width: 100%; height: 100%; border: none; }
-.map-placeholder { text-align: center; color: var(--text-muted); font-size: 13px; }
-.photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; margin-top: 12px; }
-.photo-thumb { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 3px; border: 1px solid var(--border); cursor: pointer; }
-.photo-thumb-placeholder { width: 100%; aspect-ratio: 1; background: var(--bg); border-radius: 3px; border: 2px dashed var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 24px; transition: border-color 0.15s; }
-.photo-thumb-placeholder:hover { border-color: var(--leaf); }
-.tab-bar { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 20px; }
-.tab { padding: 10px 18px; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--text-muted); border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.15s; }
-.tab.active { color: var(--leaf); border-bottom-color: var(--leaf); }
-.tab:hover { color: var(--text); }
-.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 24px; }
-.modal { background: var(--cream); border-radius: 4px; border-top: 4px solid var(--leaf); padding: 28px; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; }
-.modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 2px; color: var(--forest); margin-bottom: 20px; }
-.invoice-line { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; }
-.invoice-line input { padding: 8px 10px; border: 1.5px solid var(--border); border-radius: 3px; font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; background: white; }
-.invoice-desc { flex: 1; }
-.invoice-qty { width: 70px; }
-.invoice-price { width: 90px; }
-.invoice-total { width: 80px; font-weight: 600; font-size: 13px; color: var(--forest); padding: 8px 4px; }
-.invoice-summary { background: var(--forest); color: var(--cream); border-radius: 4px; padding: 16px 20px; margin-top: 16px; }
-.checkin-btn { display: flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 4px; border: none; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; font-weight: 600; transition: all 0.15s; }
-.checkin-btn.in { background: var(--leaf); color: white; }
-.checkin-btn.out { background: var(--rust); color: white; }
-.progress-bar { height: 6px; background: var(--bg); border-radius: 3px; overflow: hidden; margin-top: 6px; }
-.progress-fill { height: 100%; background: var(--lime); border-radius: 3px; transition: width 0.3s; }
-.customer-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 16px; margin-bottom: 10px; cursor: pointer; transition: all 0.15s; }
-.customer-card:hover { border-color: var(--leaf); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-.schedule-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 6px; }
-.day-cell { background: var(--card-bg); border: 1px solid var(--border); border-radius: 3px; padding: 10px 8px; min-height: 90px; }
-.day-name { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 6px; }
-.day-number { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--forest); line-height: 1; margin-bottom: 6px; }
-.day-cell.today { border-color: var(--lime); background: rgba(122,182,72,0.05); }
-.day-cell.today .day-number { color: var(--leaf); }
-.day-event { background: var(--forest); color: var(--cream); font-size: 9px; padding: 2px 5px; border-radius: 2px; margin-top: 3px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.day-event.amber { background: var(--amber); }
-.day-event.rust { background: var(--rust); }
-.time-total { font-family: 'Bebas Neue', sans-serif; font-size: 48px; color: var(--forest); letter-spacing: 3px; line-height: 1; }
-.address-lookup { display: flex; gap: 8px; margin-bottom: 16px; }
-.address-lookup input { flex: 1; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 3px; font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; background: white; }
-.address-lookup input:focus { outline: none; border-color: var(--leaf); }
-.map-views { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.map-label { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'IBM Plex Sans',sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column;}
+
+/* HEADER */
+.app-header{background:var(--forest);color:var(--cream);height:var(--header-h);display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:3px solid var(--lime);flex-shrink:0;position:relative;z-index:50;}
+.header-logo{display:flex;align-items:center;gap:10px;}
+.logo-text{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;line-height:1;}
+.logo-sub{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--lime);}
+.header-user{display:flex;align-items:center;gap:8px;}
+.user-avatar{width:32px;height:32px;border-radius:50%;background:var(--lime);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--forest);flex-shrink:0;}
+.user-name{font-size:13px;font-weight:500;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.btn-logout{background:transparent;border:1px solid rgba(255,255,255,0.3);color:var(--cream);padding:5px 10px;border-radius:4px;cursor:pointer;font-size:11px;font-family:'IBM Plex Sans',sans-serif;letter-spacing:0.5px;white-space:nowrap;}
+
+/* SCROLL AREA */
+.app-body{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:calc(var(--nav-h) + 16px);}
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);background:var(--forest);border-top:2px solid var(--lime);display:flex;align-items:stretch;z-index:100;padding-bottom:env(safe-area-inset-bottom);}
+.nav-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:3px;transition:background 0.15s;border:none;background:transparent;color:rgba(255,255,255,0.5);padding:8px 4px;}
+.nav-tab.active{color:var(--lime);background:rgba(122,182,72,0.1);}
+.nav-tab:active{background:rgba(255,255,255,0.05);}
+.nav-icon{font-size:20px;line-height:1;}
+.nav-label{font-size:9px;letter-spacing:0.5px;text-transform:uppercase;font-weight:600;line-height:1;}
+
+/* MORE MENU */
+.more-menu{position:fixed;bottom:calc(var(--nav-h) + 8px);right:8px;background:var(--forest);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:8px 0;z-index:200;min-width:200px;box-shadow:0 8px 32px rgba(0,0,0,0.4);}
+.more-item{display:flex;align-items:center;gap:12px;padding:12px 18px;cursor:pointer;font-size:14px;color:rgba(255,255,255,0.8);transition:background 0.1s;}
+.more-item:active,.more-item:hover{background:rgba(255,255,255,0.08);color:white;}
+.more-item .mi-icon{font-size:16px;width:20px;text-align:center;}
+
+/* LOGIN */
+.login-screen{position:fixed;inset:0;background:var(--forest);display:flex;align-items:center;justify-content:center;padding:24px;z-index:1000;}
+.login-card{background:var(--cream);border-radius:8px;padding:36px 28px;width:100%;max-width:380px;border-top:5px solid var(--lime);box-shadow:0 20px 60px rgba(0,0,0,0.5);}
+.login-logo{display:flex;flex-direction:column;align-items:center;margin-bottom:28px;gap:8px;}
+.login-title{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:4px;color:var(--forest);text-align:center;}
+.login-tagline{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--leaf);font-weight:500;}
+.form-label{display:block;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:5px;}
+.form-input{width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:16px;background:white;color:var(--text);margin-bottom:14px;-webkit-appearance:none;}
+.form-input:focus{outline:none;border-color:var(--leaf);}
+.btn-primary{width:100%;padding:15px;background:var(--forest);color:var(--cream);border:none;border-radius:6px;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;cursor:pointer;margin-top:6px;}
+.login-hint{text-align:center;margin-top:16px;font-size:11px;color:var(--text-muted);font-family:'IBM Plex Mono',monospace;line-height:1.6;}
+.login-error{background:#fde8e8;border:1px solid #f5a5a5;color:var(--danger);padding:10px 14px;border-radius:6px;font-size:13px;margin-bottom:12px;text-align:center;}
+
+/* PAGES */
+.page{padding:16px;display:none;}
+.page.active{display:block;}
+.page-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--forest);line-height:1;}
+.page-subtitle{font-size:12px;color:var(--text-muted);margin-top:3px;margin-bottom:16px;}
+
+/* CARDS */
+.card{background:var(--card);border-radius:8px;border:1px solid var(--border);padding:16px;margin-bottom:12px;}
+.card-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px;}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px;border-top:3px solid var(--leaf);}
+.stat-card.amber{border-top-color:var(--amber);}
+.stat-card.rust{border-top-color:var(--rust);}
+.stat-card.bark{border-top-color:var(--bark);}
+.stat-value{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:1px;color:var(--forest);line-height:1;}
+.stat-label{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-top:3px;}
+
+/* BADGES */
+.badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;}
+.badge-green{background:#e8f5e9;color:#2e7d32;}
+.badge-amber{background:#fff8e1;color:#f57f17;}
+.badge-red{background:#fde8e8;color:var(--danger);}
+.badge-blue{background:#e3f2fd;color:#1565c0;}
+.badge-gray{background:#f5f5f5;color:#616161;}
+
+/* JOB CARDS */
+.job-row{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);align-items:flex-start;}
+.job-row:last-child{border-bottom:none;padding-bottom:0;}
+.job-icon{width:38px;height:38px;background:var(--forest);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.job-title{font-weight:600;font-size:14px;}
+.job-meta{font-size:12px;color:var(--text-muted);margin-top:2px;line-height:1.5;}
+.job-right{margin-left:auto;text-align:right;flex-shrink:0;}
+.job-value{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--forest);}
+
+/* FORMS */
+.form-group{margin-bottom:12px;}
+.field-input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:6px;font-family:'IBM Plex Sans',sans-serif;font-size:16px;background:white;color:var(--text);-webkit-appearance:none;}
+.field-input:focus{outline:none;border-color:var(--leaf);}
+.field-select{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:6px;font-family:'IBM Plex Sans',sans-serif;font-size:16px;background:white;color:var(--text);-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a5a4a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
+.field-textarea{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:6px;font-family:'IBM Plex Sans',sans-serif;font-size:15px;background:white;color:var(--text);resize:vertical;min-height:90px;}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.btn-submit{width:100%;padding:14px;background:var(--leaf);color:white;border:none;border-radius:6px;font-family:'IBM Plex Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;margin-top:4px;}
+.btn-submit:active{background:var(--moss);}
+.btn-submit.danger{background:var(--rust);}
+.btn-outline{padding:10px 18px;background:transparent;color:var(--text-muted);border:1.5px solid var(--border);border-radius:6px;font-family:'IBM Plex Sans',sans-serif;font-size:13px;cursor:pointer;}
+.btn-small{padding:7px 14px;background:var(--forest);color:var(--cream);border:none;border-radius:5px;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;}
+.btn-small.outline{background:transparent;color:var(--text-muted);border:1.5px solid var(--border);}
+
+/* SUCCESS */
+.success-msg{background:#e8f5e9;border:1px solid #a5d6a7;color:#2e7d32;padding:12px 14px;border-radius:6px;font-size:13px;margin-bottom:12px;}
+
+/* TABLE (scrollable) */
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.data-table{width:100%;border-collapse:collapse;font-size:13px;min-width:480px;}
+.data-table th{text-align:left;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);padding:8px 10px;border-bottom:2px solid var(--border);white-space:nowrap;}
+.data-table td{padding:10px 10px;border-bottom:1px solid rgba(26,46,26,0.07);vertical-align:middle;}
+
+/* ANNOUNCEMENTS */
+.announcement{background:var(--forest);color:var(--cream);border-radius:6px;padding:14px 16px;margin-bottom:10px;border-left:4px solid var(--lime);}
+.announcement.warn{border-left-color:var(--amber-light);background:var(--bark);}
+.ann-title{font-weight:600;font-size:14px;margin-bottom:3px;}
+.ann-body{font-size:12px;opacity:0.75;line-height:1.5;}
+.ann-date{font-size:10px;opacity:0.45;margin-top:6px;font-family:'IBM Plex Mono',monospace;}
+
+/* MAP */
+.map-frame{width:100%;height:260px;border-radius:6px;border:1px solid var(--border);overflow:hidden;background:#e8e0d0;display:flex;align-items:center;justify-content:center;}
+.map-frame iframe{width:100%;height:100%;border:none;}
+.map-placeholder{text-align:center;color:var(--text-muted);font-size:13px;padding:20px;}
+
+/* PHOTO GRID */
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px;}
+.photo-thumb{width:100%;aspect-ratio:1;object-fit:cover;border-radius:5px;border:1px solid var(--border);}
+.photo-add{width:100%;aspect-ratio:1;background:var(--bg);border-radius:5px;border:2px dashed var(--border);display:flex;align-items:center;justify-content:center;font-size:28px;cursor:pointer;color:var(--text-muted);}
+
+/* CHECKIN */
+.checkin-row{display:flex;gap:10px;margin-top:10px;}
+.btn-checkin{flex:1;padding:13px;border:none;border-radius:6px;font-family:'IBM Plex Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn-checkin.in{background:var(--leaf);color:white;}
+.btn-checkin.out{background:var(--rust);color:white;}
+
+/* PROGRESS */
+.progress-bar{height:6px;background:var(--bg);border-radius:3px;overflow:hidden;margin-top:6px;}
+.progress-fill{height:100%;background:var(--lime);border-radius:3px;}
+
+/* INVOICE */
+.inv-line{display:flex;gap:6px;margin-bottom:8px;align-items:center;}
+.inv-desc{flex:1;padding:9px 10px;border:1.5px solid var(--border);border-radius:5px;font-size:14px;font-family:'IBM Plex Sans',sans-serif;}
+.inv-qty{width:52px;padding:9px 8px;border:1.5px solid var(--border);border-radius:5px;font-size:14px;text-align:center;}
+.inv-price{width:80px;padding:9px 8px;border:1.5px solid var(--border);border-radius:5px;font-size:14px;}
+.inv-tot{width:70px;font-weight:600;font-size:13px;color:var(--forest);padding:4px;flex-shrink:0;}
+.inv-summary{background:var(--forest);color:var(--cream);border-radius:6px;padding:14px 16px;margin-top:14px;}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:300;display:flex;align-items:flex-end;justify-content:center;}
+.modal-sheet{background:var(--cream);border-radius:12px 12px 0 0;padding:20px 18px 32px;width:100%;max-height:90vh;overflow-y:auto;}
+.modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px;opacity:0.6;}
+.modal-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--forest);margin-bottom:16px;}
+
+/* CUSTOMER */
+.customer-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);cursor:pointer;}
+.customer-item:last-child{border-bottom:none;}
+.cust-avatar{width:40px;height:40px;border-radius:50%;background:var(--forest);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--lime);flex-shrink:0;}
+.cust-name{font-weight:600;font-size:14px;}
+.cust-meta{font-size:12px;color:var(--text-muted);}
+
+/* DIVIDER */
+.divider{border:none;border-top:1px solid var(--border);margin:14px 0;}
+
+/* FAB */
+.fab{position:fixed;bottom:calc(var(--nav-h) + 16px);right:16px;width:52px;height:52px;border-radius:50%;background:var(--lime);border:none;color:var(--forest);font-size:24px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,0.25);z-index:90;}
+
+.hidden{display:none!important;}
+.time-big{font-family:'Bebas Neue',sans-serif;font-size:44px;color:var(--forest);letter-spacing:2px;line-height:1;}
 </style>
 </head>
 <body>
 
+<!-- LOGIN -->
 <div id="loginScreen" class="login-screen">
   <div class="login-card">
     <div class="login-logo">
-      <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-        <rect width="56" height="56" rx="4" fill="#1a2e1a"/>
+      <svg width="52" height="52" viewBox="0 0 56 56" fill="none">
+        <rect width="56" height="56" rx="6" fill="#1a2e1a"/>
         <path d="M28 8L28 42" stroke="#7ab648" stroke-width="2.5" stroke-linecap="round"/>
         <path d="M28 14L16 24" stroke="#7ab648" stroke-width="2" stroke-linecap="round"/>
         <path d="M28 14L40 24" stroke="#7ab648" stroke-width="2" stroke-linecap="round"/>
@@ -168,20 +193,21 @@ body { font-family: 'IBM Plex Sans', sans-serif; background: var(--bg); color: v
         <rect x="26" y="42" width="4" height="8" rx="1" fill="#3d2b1f"/>
       </svg>
       <div class="login-title">Penn West Tree</div>
-      <div class="login-tagline">Employee Portal · Sharpsville, PA</div>
+      <div class="login-tagline">Employee Portal</div>
     </div>
     <div id="loginError" class="login-error hidden"></div>
-    <div><label class="form-label">Username</label><input type="text" class="form-input" id="loginUser" placeholder="firstname.lastname"/></div>
-    <div><label class="form-label">Password</label><input type="password" class="form-input" id="loginPass" placeholder="••••••••"/></div>
+    <div><label class="form-label">Username</label><input type="text" class="form-input" id="loginUser" placeholder="firstname.lastname" autocomplete="username" autocapitalize="none"/></div>
+    <div><label class="form-label">Password</label><input type="password" class="form-input" id="loginPass" placeholder="••••••••" autocomplete="current-password"/></div>
     <button class="btn-primary" onclick="doLogin()">Sign In</button>
     <div class="login-hint">Demo: mike.jenkins / tree1234<br>Admin: admin / admin123</div>
   </div>
 </div>
 
-<div id="appShell" class="hidden">
+<!-- APP -->
+<div id="appShell" class="hidden" style="display:flex;flex-direction:column;height:100%;">
   <header class="app-header">
-    <div class="logo">
-      <svg width="32" height="32" viewBox="0 0 56 56" fill="none">
+    <div class="header-logo">
+      <svg width="28" height="28" viewBox="0 0 56 56" fill="none">
         <path d="M28 4L28 42" stroke="#7ab648" stroke-width="2.5" stroke-linecap="round"/>
         <path d="M28 10L16 22" stroke="#7ab648" stroke-width="2" stroke-linecap="round"/>
         <path d="M28 10L40 22" stroke="#7ab648" stroke-width="2" stroke-linecap="round"/>
@@ -189,610 +215,623 @@ body { font-family: 'IBM Plex Sans', sans-serif; background: var(--bg); color: v
         <path d="M28 19L39 30" stroke="#4a7c3f" stroke-width="2" stroke-linecap="round"/>
         <rect x="26" y="42" width="4" height="10" rx="1" fill="#3d2b1f"/>
       </svg>
-      <div><div class="logo-text">Penn West Tree</div><div class="logo-sub">Employee Portal</div></div>
+      <div><div class="logo-text">Penn West Tree</div><div class="logo-sub">Sharpsville, PA</div></div>
     </div>
-    <div class="header-right">
-      <div class="user-chip">
-        <div class="user-avatar" id="headerAvatar">MJ</div>
-        <span id="headerName">Mike Jenkins</span>
-        <span style="color:rgba(255,255,255,0.3);font-size:10px;letter-spacing:1px;text-transform:uppercase;margin-left:4px;" id="headerRole">Crew</span>
-      </div>
-      <button class="btn-logout" onclick="doLogout()">Sign Out</button>
+    <div class="header-user">
+      <div class="user-avatar" id="headerAvatar">MJ</div>
+      <span class="user-name" id="headerName">Mike</span>
+      <button class="btn-logout" onclick="doLogout()">Out</button>
     </div>
   </header>
 
-  <div class="app-layout">
-    <nav class="sidebar">
-      <div class="nav-section">Main</div>
-      <div class="nav-item active" onclick="showPage('dashboard')"><span class="nav-icon">⊞</span> Dashboard</div>
-      <div class="nav-item" onclick="showPage('hours')"><span class="nav-icon">⏱</span> Log Hours</div>
-      <div class="nav-item" onclick="showPage('schedule')"><span class="nav-icon">📅</span> Schedule</div>
-      <div class="nav-item" onclick="showPage('jobs')"><span class="nav-icon">🪵</span> Job Board</div>
-      <div class="nav-item" onclick="showPage('customers')"><span class="nav-icon">👤</span> Customers</div>
-      <div class="nav-item" onclick="showPage('quotes')"><span class="nav-icon">💰</span> Quotes & Invoices</div>
-      <div class="nav-section">Tools</div>
-      <div class="nav-item" onclick="showPage('satellite')"><span class="nav-icon">🛰</span> Site Viewer</div>
-      <div class="nav-item" onclick="showPage('photos')"><span class="nav-icon">📷</span> Job Photos</div>
-      <div class="nav-item" onclick="showPage('incidents')"><span class="nav-icon">⚠</span> Safety Reports</div>
-      <div class="nav-item" onclick="showPage('equipment')"><span class="nav-icon">🔧</span> Equipment</div>
-      <div class="nav-item" onclick="showPage('ai')"><span class="nav-icon">🌿</span> AI Assistant</div>
-      <div id="adminNavSection" class="hidden">
-        <div class="nav-section">Admin</div>
-        <div class="nav-item" onclick="showPage('admin')"><span class="nav-icon">👥</span> All Employees</div>
-      </div>
-      <div class="sidebar-footer">
-        <div class="weather-chip">
-          <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:2px;">Sharpsville, PA</div>
-          <div class="weather-temp" id="weatherTemp">64°F</div>
-          <div style="font-size:11px;color:rgba(255,255,255,0.5);" id="weatherDesc">Partly Cloudy</div>
-        </div>
-      </div>
-    </nav>
+  <div class="app-body" id="appBody">
 
-    <main class="main-content">
+    <!-- DASHBOARD -->
+    <div id="page-dashboard" class="page active">
+      <div style="padding-top:4px;">
+        <div class="page-title" id="dashGreeting">Good Morning, Mike</div>
+        <div class="page-subtitle" id="dashDate">Monday, April 21, 2025</div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-value" id="statHours">38.5</div><div class="stat-label">Hrs This Week</div></div>
+        <div class="stat-card amber"><div class="stat-value">2</div><div class="stat-label">Jobs Today</div></div>
+        <div class="stat-card rust"><div class="stat-value">3</div><div class="stat-label">PTO Days Left</div></div>
+        <div class="stat-card bark"><div class="stat-value" id="weatherStat">64°F</div><div class="stat-label" id="weatherLabel">Partly Cloudy</div></div>
+      </div>
 
-      <!-- DASHBOARD -->
-      <div id="page-dashboard">
-        <div class="page-header">
-          <div class="page-title" id="dashGreeting">Good Morning, Mike</div>
-          <div class="page-subtitle" id="dashDate">Monday, April 21, 2025</div>
+      <div class="card">
+        <div class="card-title">GPS Check-In</div>
+        <div id="checkinStatus" style="font-size:13px;color:var(--text-muted);">Not checked in today</div>
+        <div class="checkin-row">
+          <button class="btn-checkin in" onclick="doCheckin()">📍 Check In</button>
+          <button class="btn-checkin out" onclick="doCheckout()">🏁 Check Out</button>
         </div>
-        <div class="stats-grid">
-          <div class="stat-card"><div class="stat-value" id="statHoursWeek">38.5</div><div class="stat-label">Hours This Week</div></div>
-          <div class="stat-card amber"><div class="stat-value" id="statJobsToday">2</div><div class="stat-label">Jobs Today</div></div>
-          <div class="stat-card rust"><div class="stat-value" id="statPTO">3</div><div class="stat-label">PTO Days Left</div></div>
-          <div class="stat-card bark"><div class="stat-value" id="statCustomers">14</div><div class="stat-label">Active Customers</div></div>
+        <div id="checkinLog" style="margin-top:8px;font-size:11px;color:var(--text-muted);font-family:'IBM Plex Mono',monospace;"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Today's Jobs</div>
+        <div class="job-row">
+          <div class="job-icon">🌲</div>
+          <div style="flex:1;"><div class="job-title">Tree Removal — 412 Oak St</div><div class="job-meta">8:00 AM · Crew of 3</div></div>
+          <span class="badge badge-green">Active</span>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-          <div>
-            <div class="card">
-              <div class="card-title">Today's Assignments</div>
-              <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);">
-                <div class="job-icon">🌲</div>
-                <div style="flex:1;"><div class="job-title">Tree Removal — 412 Oak St</div><div class="job-detail"><span>8:00 AM</span><span>Crew of 3</span></div></div>
-                <span class="badge badge-green">Active</span>
-              </div>
-              <div style="display:flex;align-items:flex-start;gap:12px;padding:10px 0;">
-                <div class="job-icon">✂️</div>
-                <div style="flex:1;"><div class="job-title">Pruning — 88 Maple Ave</div><div class="job-detail"><span>1:00 PM</span><span>Crew of 2</span></div></div>
-                <span class="badge badge-amber">Upcoming</span>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-title">GPS Check-In</div>
-              <div id="checkinStatus" style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">Not checked in today</div>
-              <div style="display:flex;gap:10px;">
-                <button class="checkin-btn in" onclick="doCheckin()">📍 Check In</button>
-                <button class="checkin-btn out" onclick="doCheckout()">🏁 Check Out</button>
-              </div>
-              <div id="checkinLog" style="margin-top:12px;font-size:12px;color:var(--text-muted);font-family:'IBM Plex Mono',monospace;"></div>
-            </div>
-          </div>
-          <div>
-            <div class="card">
-              <div class="card-title">Announcements</div>
-              <div class="announcement"><div class="ann-title">Safety Briefing — Friday</div><div class="ann-body">Mandatory chainsaw certification renewal at 7 AM in the yard.</div><div class="ann-date">Apr 18, 2025</div></div>
-              <div class="announcement warn"><div class="ann-title">⚠ Weather Alert</div><div class="ann-body">High winds forecast Thurs–Fri. Check job assignments before heading out.</div><div class="ann-date">Apr 19, 2025</div></div>
-            </div>
-            <div class="card">
-              <div class="card-title">Weekly Hours Progress</div>
-              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;">
-                <span style="font-size:13px;color:var(--text-muted);">38.5 / 40 hrs</span>
-                <span style="font-size:12px;color:var(--leaf);font-weight:600;">96%</span>
-              </div>
-              <div class="progress-bar"><div class="progress-fill" style="width:96%"></div></div>
-              <div style="margin-top:16px;font-size:12px;color:var(--text-muted);">Overtime kicks in after 40 hrs · Current rate: <strong style="color:var(--amber);">$0 OT</strong></div>
-            </div>
-          </div>
+        <div class="job-row">
+          <div class="job-icon">✂️</div>
+          <div style="flex:1;"><div class="job-title">Pruning — 88 Maple Ave</div><div class="job-meta">1:00 PM · Crew of 2</div></div>
+          <span class="badge badge-amber">PM</span>
         </div>
       </div>
 
-      <!-- HOURS -->
-      <div id="page-hours" class="hidden">
-        <div class="page-header"><div class="page-title">Log Hours</div><div class="page-subtitle">Record your work time for each job</div></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-          <div>
-            <div class="card">
-              <div class="card-title">New Time Entry</div>
-              <div id="hoursSuccess" class="success-msg hidden">✓ Time entry submitted successfully.</div>
-              <div class="form-group-inline"><label class="form-label">Date</label><input type="date" class="form-input" id="entryDate" style="margin-bottom:0;"/></div>
-              <div class="form-row" style="margin-top:14px;">
-                <div><label class="form-label">Time In</label><input type="time" class="form-input" id="entryIn" style="margin-bottom:0;"/></div>
-                <div><label class="form-label">Time Out</label><input type="time" class="form-input" id="entryOut" style="margin-bottom:0;"/></div>
-              </div>
-              <div class="form-group-inline" style="margin-top:14px;"><label class="form-label">Job / Location</label>
-                <select class="form-select" id="entryJob">
-                  <option>412 Oak St — Tree Removal</option><option>88 Maple Ave — Pruning</option>
-                  <option>207 Pine Rd — Stump Grinding</option><option>Shop / Yard Work</option><option>Other</option>
-                </select>
-              </div>
-              <div class="form-group-inline" style="margin-top:12px;"><label class="form-label">Work Type</label>
-                <select class="form-select" id="entryType"><option>Regular</option><option>Overtime</option><option>Travel</option><option>Training</option></select>
-              </div>
-              <div class="form-group-inline" style="margin-top:12px;"><label class="form-label">Notes (optional)</label><textarea class="form-textarea" id="entryNotes" placeholder="Any details about the work done..."></textarea></div>
-              <div style="margin-top:16px;"><button class="btn-submit" onclick="submitHours()">Submit Entry</button></div>
-            </div>
-          </div>
-          <div>
-            <div class="card">
-              <div style="display:flex;align-items:flex-end;gap:16px;margin-bottom:16px;">
-                <div><div class="time-total" id="totalHours">38.5</div><div style="font-size:12px;color:var(--text-muted);letter-spacing:1.5px;text-transform:uppercase;">Hours this week</div></div>
-                <div style="margin-bottom:6px;"><div style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--amber);letter-spacing:2px;" id="otHours">1.5</div><div style="font-size:12px;color:var(--text-muted);letter-spacing:1.5px;text-transform:uppercase;">Overtime</div></div>
-              </div>
-              <hr class="divider">
-              <div class="card-title">Recent Entries</div>
-              <table class="data-table"><thead><tr><th>Date</th><th>Job</th><th>Hours</th><th>Type</th></tr></thead>
-                <tbody id="hoursTableBody">
-                  <tr><td>Apr 20</td><td>412 Oak St</td><td>8.0</td><td><span class="badge badge-green">Regular</span></td></tr>
-                  <tr><td>Apr 19</td><td>88 Maple Ave</td><td>6.5</td><td><span class="badge badge-green">Regular</span></td></tr>
-                  <tr><td>Apr 18</td><td>Shop/Yard</td><td>8.5</td><td><span class="badge badge-amber">Overtime</span></td></tr>
-                  <tr><td>Apr 17</td><td>207 Pine Rd</td><td>7.5</td><td><span class="badge badge-green">Regular</span></td></tr>
-                  <tr><td>Apr 16</td><td>412 Oak St</td><td>8.0</td><td><span class="badge badge-green">Regular</span></td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+      <div class="card">
+        <div class="card-title">Weekly Hours</div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">
+          <span style="font-size:13px;color:var(--text-muted);">38.5 / 40 hrs</span>
+          <span style="font-size:12px;color:var(--leaf);font-weight:600;">96%</span>
         </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:96%"></div></div>
       </div>
 
-      <!-- SCHEDULE -->
-      <div id="page-schedule" class="hidden">
-        <div class="page-header"><div class="page-title">Weekly Schedule</div><div class="page-subtitle">April 20 – 26, 2025</div></div>
-        <div class="card">
-          <div class="schedule-grid">
-            <div class="day-cell today"><div class="day-name">Sun</div><div class="day-number">20</div><div class="day-event">412 Oak St</div><div class="day-event amber">1PM Pruning</div></div>
-            <div class="day-cell today"><div class="day-name">Mon</div><div class="day-number">21</div><div class="day-event">8AM Oak St</div><div class="day-event amber">1PM Maple</div></div>
-            <div class="day-cell"><div class="day-name">Tue</div><div class="day-number">22</div><div class="day-event">Pine Rd Stump</div></div>
-            <div class="day-cell"><div class="day-name">Wed</div><div class="day-number">23</div><div class="day-event">Shop Day</div></div>
-            <div class="day-cell"><div class="day-name">Thu</div><div class="day-number">24</div><div class="day-event rust">⚠ Wind Alert</div></div>
-            <div class="day-cell"><div class="day-name">Fri</div><div class="day-number">25</div><div class="day-event rust">⚠ Wind</div><div class="day-event">7AM Safety</div></div>
-            <div class="day-cell"><div class="day-name">Sat</div><div class="day-number">26</div><div style="font-size:11px;color:var(--text-muted);margin-top:6px;">Off</div></div>
-          </div>
+      <div class="card">
+        <div class="card-title">Announcements</div>
+        <div class="announcement"><div class="ann-title">Safety Briefing — Friday</div><div class="ann-body">Mandatory chainsaw certification renewal at 7 AM in the yard.</div><div class="ann-date">Apr 18, 2025</div></div>
+        <div class="announcement warn"><div class="ann-title">⚠ Weather Alert</div><div class="ann-body">High winds forecast Thurs–Fri. Check job assignments first.</div><div class="ann-date">Apr 19, 2025</div></div>
+      </div>
+    </div>
+
+    <!-- LOG HOURS -->
+    <div id="page-hours" class="page">
+      <div class="page-title">Log Hours</div>
+      <div class="page-subtitle">Record your work time</div>
+
+      <div class="card" style="text-align:center;padding:20px;">
+        <div style="font-size:12px;color:var(--text-muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;">This Week</div>
+        <div class="time-big" id="totalHours">38.5</div>
+        <div style="font-size:12px;color:var(--text-muted);">hours &nbsp;·&nbsp; <span style="color:var(--amber);" id="otHours">1.5 OT</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">New Entry</div>
+        <div id="hoursSuccess" class="success-msg hidden">✓ Time entry submitted.</div>
+        <div class="form-group"><label class="form-label">Date</label><input type="date" class="field-input" id="entryDate"/></div>
+        <div class="form-row-2">
+          <div class="form-group"><label class="form-label">Time In</label><input type="time" class="field-input" id="entryIn"/></div>
+          <div class="form-group"><label class="form-label">Time Out</label><input type="time" class="field-input" id="entryOut"/></div>
         </div>
-        <div class="card"><div class="card-title">Upcoming Jobs</div>
-          <table class="data-table"><thead><tr><th>Date</th><th>Job</th><th>Address</th><th>Crew</th><th>Status</th></tr></thead>
-            <tbody>
-              <tr><td>Apr 21</td><td>Tree Removal</td><td>412 Oak St</td><td>Jenkins, Kowalski, Davis</td><td><span class="badge badge-green">Confirmed</span></td></tr>
-              <tr><td>Apr 21</td><td>Pruning</td><td>88 Maple Ave</td><td>Jenkins, Kowalski</td><td><span class="badge badge-green">Confirmed</span></td></tr>
-              <tr><td>Apr 22</td><td>Stump Grinding</td><td>207 Pine Rd</td><td>Davis</td><td><span class="badge badge-amber">Pending</span></td></tr>
-              <tr><td>Apr 24</td><td>Emergency Removal</td><td>55 Elm Dr</td><td>TBD</td><td><span class="badge badge-red">Weather Hold</span></td></tr>
-              <tr><td>Apr 25</td><td>Safety Training</td><td>Company Yard</td><td>All Crew</td><td><span class="badge badge-blue">Training</span></td></tr>
+        <div class="form-group"><label class="form-label">Job</label>
+          <select class="field-select" id="entryJob">
+            <option>412 Oak St — Tree Removal</option><option>88 Maple Ave — Pruning</option>
+            <option>207 Pine Rd — Stump Grinding</option><option>Shop / Yard Work</option><option>Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Type</label>
+          <select class="field-select" id="entryType"><option>Regular</option><option>Overtime</option><option>Travel</option><option>Training</option></select>
+        </div>
+        <div class="form-group"><label class="form-label">Notes</label><textarea class="field-textarea" id="entryNotes" placeholder="Optional notes..."></textarea></div>
+        <button class="btn-submit" onclick="submitHours()">Submit Entry</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Recent Entries</div>
+        <div class="table-wrap">
+          <table class="data-table"><thead><tr><th>Date</th><th>Job</th><th>Hrs</th><th>Type</th></tr></thead>
+            <tbody id="hoursTableBody">
+              <tr><td>Apr 20</td><td>412 Oak St</td><td>8.0</td><td><span class="badge badge-green">Reg</span></td></tr>
+              <tr><td>Apr 19</td><td>88 Maple</td><td>6.5</td><td><span class="badge badge-green">Reg</span></td></tr>
+              <tr><td>Apr 18</td><td>Shop/Yard</td><td>8.5</td><td><span class="badge badge-amber">OT</span></td></tr>
+              <tr><td>Apr 17</td><td>207 Pine</td><td>7.5</td><td><span class="badge badge-green">Reg</span></td></tr>
             </tbody>
           </table>
         </div>
       </div>
+    </div>
 
-      <!-- JOBS -->
-      <div id="page-jobs" class="hidden">
-        <div class="page-header">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-            <div><div class="page-title">Job Board</div><div class="page-subtitle">Active and upcoming service orders</div></div>
-            <button class="btn-submit" onclick="showAddJobModal()">+ Add Job</button>
-          </div>
+    <!-- JOBS -->
+    <div id="page-jobs" class="page">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <div class="page-title">Job Board</div>
+        <button class="btn-small" onclick="showModal('addJobModal')">+ Add</button>
+      </div>
+      <div class="page-subtitle">Active service orders</div>
+
+      <div class="card">
+        <div class="job-row">
+          <div class="job-icon">🌲</div>
+          <div style="flex:1;"><div class="job-title">Large Oak Removal</div><div class="job-meta">📍 412 Oak St, Sharpsville<br>👥 Jenkins, Kowalski, Davis · Apr 21–22</div></div>
+          <div class="job-right"><span class="badge badge-green">Active</span><br><div class="job-value">$1,850</div><button class="btn-small outline" style="margin-top:5px;" onclick="goSat('412 Oak Street, Sharpsville, PA')">🛰</button></div>
         </div>
-        <div id="jobsList">
-          <div class="job-card"><div class="job-icon">🌲</div><div style="flex:1;"><div style="display:flex;align-items:center;gap:8px;"><div class="job-title">Large Oak Removal</div><span class="badge badge-green">In Progress</span></div><div class="job-detail"><span>📍 412 Oak Street, Sharpsville</span><span>👥 Jenkins, Kowalski, Davis</span><span>📅 Apr 21–22</span></div><div class="job-detail" style="margin-top:4px;">Estimated 60ft oak over driveway. Customer: R. Battaglia</div></div><div style="margin-left:auto;text-align:right;flex-shrink:0;"><div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--forest);">$1,850</div><div style="font-size:11px;color:var(--text-muted);">Est. value</div><button class="btn-secondary" style="margin-top:6px;font-size:11px;padding:5px 10px;" onclick="viewSatellite('412 Oak Street, Sharpsville, PA')">🛰 View Site</button></div></div>
-          <div class="job-card"><div class="job-icon">✂️</div><div style="flex:1;"><div style="display:flex;align-items:center;gap:8px;"><div class="job-title">Seasonal Pruning</div><span class="badge badge-amber">Scheduled</span></div><div class="job-detail"><span>📍 88 Maple Avenue, Sharpsville</span><span>👥 Jenkins, Kowalski</span><span>📅 Apr 21 PM</span></div><div class="job-detail" style="margin-top:4px;">5 maple trees, deadwood removal. Customer: T. Ostrowski</div></div><div style="margin-left:auto;text-align:right;flex-shrink:0;"><div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--forest);">$620</div><div style="font-size:11px;color:var(--text-muted);">Est. value</div><button class="btn-secondary" style="margin-top:6px;font-size:11px;padding:5px 10px;" onclick="viewSatellite('88 Maple Avenue, Sharpsville, PA')">🛰 View Site</button></div></div>
-          <div class="job-card"><div class="job-icon">🪨</div><div style="flex:1;"><div style="display:flex;align-items:center;gap:8px;"><div class="job-title">Stump Grinding</div><span class="badge badge-gray">Pending</span></div><div class="job-detail"><span>📍 207 Pine Road, Sharon</span><span>👥 Davis</span><span>📅 Apr 22</span></div><div class="job-detail" style="margin-top:4px;">3 stumps from previous removal. Customer: M. Santoro</div></div><div style="margin-left:auto;text-align:right;flex-shrink:0;"><div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--forest);">$280</div><div style="font-size:11px;color:var(--text-muted);">Est. value</div><button class="btn-secondary" style="margin-top:6px;font-size:11px;padding:5px 10px;" onclick="viewSatellite('207 Pine Road, Sharon, PA')">🛰 View Site</button></div></div>
+        <div class="job-row">
+          <div class="job-icon">✂️</div>
+          <div style="flex:1;"><div class="job-title">Seasonal Pruning</div><div class="job-meta">📍 88 Maple Ave, Sharpsville<br>👥 Jenkins, Kowalski · Apr 21 PM</div></div>
+          <div class="job-right"><span class="badge badge-amber">Sched.</span><br><div class="job-value">$620</div><button class="btn-small outline" style="margin-top:5px;" onclick="goSat('88 Maple Avenue, Sharpsville, PA')">🛰</button></div>
+        </div>
+        <div class="job-row">
+          <div class="job-icon">🪨</div>
+          <div style="flex:1;"><div class="job-title">Stump Grinding</div><div class="job-meta">📍 207 Pine Rd, Sharon<br>👥 Davis · Apr 22</div></div>
+          <div class="job-right"><span class="badge badge-gray">Pending</span><br><div class="job-value">$280</div><button class="btn-small outline" style="margin-top:5px;" onclick="goSat('207 Pine Road, Sharon, PA')">🛰</button></div>
+        </div>
+        <div class="job-row">
+          <div class="job-icon">🆘</div>
+          <div style="flex:1;"><div class="job-title">Emergency Tree Down</div><div class="job-meta">📍 55 Elm Dr, Hermitage<br>👥 TBD · Weather Hold</div></div>
+          <div class="job-right"><span class="badge badge-red">Hold</span><br><div class="job-value" style="color:var(--rust);">TBD</div><button class="btn-small outline" style="margin-top:5px;" onclick="goSat('55 Elm Drive, Hermitage, PA')">🛰</button></div>
         </div>
       </div>
+    </div>
 
-      <!-- CUSTOMERS -->
-      <div id="page-customers" class="hidden">
-        <div class="page-header">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-            <div><div class="page-title">Customers</div><div class="page-subtitle">Customer database and job history</div></div>
-            <button class="btn-submit" onclick="showAddCustomerModal()">+ Add Customer</button>
-          </div>
+    <!-- SATELLITE -->
+    <div id="page-satellite" class="page">
+      <div class="page-title">Site Viewer</div>
+      <div class="page-subtitle">Satellite + street view for any address</div>
+      <div class="card">
+        <div class="card-title">Address Lookup</div>
+        <div style="display:flex;gap:8px;margin-bottom:10px;">
+          <input type="text" class="field-input" id="satelliteAddress" placeholder="Enter job site address..." style="flex:1;" onkeydown="if(event.key==='Enter')loadSatellite()"/>
+          <button class="btn-small" onclick="loadSatellite()">🛰 Go</button>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 2fr;gap:16px;">
-          <div>
-            <div class="card" style="padding:16px;">
-              <div class="card-title">Customer List</div>
-              <div id="customerList">
-                <div class="customer-card" onclick="selectCustomer(0)"><div style="font-weight:600;font-size:14px;">R. Battaglia</div><div style="font-size:12px;color:var(--text-muted);">412 Oak St, Sharpsville</div><div style="font-size:11px;color:var(--leaf);margin-top:4px;">3 jobs · $4,200 total</div></div>
-                <div class="customer-card" onclick="selectCustomer(1)"><div style="font-weight:600;font-size:14px;">T. Ostrowski</div><div style="font-size:12px;color:var(--text-muted);">88 Maple Ave, Sharpsville</div><div style="font-size:11px;color:var(--leaf);margin-top:4px;">2 jobs · $1,240 total</div></div>
-                <div class="customer-card" onclick="selectCustomer(2)"><div style="font-weight:600;font-size:14px;">M. Santoro</div><div style="font-size:12px;color:var(--text-muted);">207 Pine Rd, Sharon</div><div style="font-size:11px;color:var(--leaf);margin-top:4px;">1 job · $280 total</div></div>
-                <div class="customer-card" onclick="selectCustomer(3)"><div style="font-weight:600;font-size:14px;">D. Ferraro</div><div style="font-size:12px;color:var(--text-muted);">55 Elm Dr, Hermitage</div><div style="font-size:11px;color:var(--leaf);margin-top:4px;">1 job · TBD</div></div>
-              </div>
-            </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+          <button class="btn-small outline" onclick="quickSat('412 Oak Street, Sharpsville, PA')" style="font-size:11px;">412 Oak St</button>
+          <button class="btn-small outline" onclick="quickSat('88 Maple Avenue, Sharpsville, PA')" style="font-size:11px;">88 Maple Ave</button>
+          <button class="btn-small outline" onclick="quickSat('207 Pine Road, Sharon, PA')" style="font-size:11px;">207 Pine Rd</button>
+          <button class="btn-small outline" onclick="quickSat('55 Elm Drive, Hermitage, PA')" style="font-size:11px;">55 Elm Dr</button>
+        </div>
+        <div id="satLabel" style="font-size:12px;color:var(--text-muted);margin-bottom:8px;"></div>
+        <div class="card-title" style="margin-bottom:6px;">Satellite View</div>
+        <div class="map-frame" id="satMap"><div class="map-placeholder">Enter an address to view</div></div>
+        <div class="card-title" style="margin-top:14px;margin-bottom:6px;">Street View</div>
+        <div class="map-frame" id="streetMap"><div class="map-placeholder">Enter an address to view</div></div>
+        <div style="margin-top:10px;font-size:11px;color:var(--text-muted);">💡 Use satellite view to check tree size, canopy, and access before a quote.</div>
+      </div>
+    </div>
+
+    <!-- MORE MENU PAGES -->
+
+    <!-- CUSTOMERS -->
+    <div id="page-customers" class="page">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <div class="page-title">Customers</div>
+        <button class="btn-small" onclick="showModal('addCustomerModal')">+ Add</button>
+      </div>
+      <div class="page-subtitle">Customer database</div>
+      <div class="card">
+        <div id="customerList">
+          <div class="customer-item" onclick="showCustomerDetail(0)">
+            <div class="cust-avatar">RB</div>
+            <div style="flex:1;"><div class="cust-name">R. Battaglia</div><div class="cust-meta">412 Oak St · 3 jobs · $4,200</div></div>
+            <span style="color:var(--text-muted);font-size:18px;">›</span>
           </div>
-          <div id="customerDetail">
-            <div class="card" style="display:flex;align-items:center;justify-content:center;min-height:300px;color:var(--text-muted);font-size:13px;">Select a customer to view details</div>
+          <div class="customer-item" onclick="showCustomerDetail(1)">
+            <div class="cust-avatar">TO</div>
+            <div style="flex:1;"><div class="cust-name">T. Ostrowski</div><div class="cust-meta">88 Maple Ave · 2 jobs · $1,240</div></div>
+            <span style="color:var(--text-muted);font-size:18px;">›</span>
+          </div>
+          <div class="customer-item" onclick="showCustomerDetail(2)">
+            <div class="cust-avatar">MS</div>
+            <div style="flex:1;"><div class="cust-name">M. Santoro</div><div class="cust-meta">207 Pine Rd · 1 job · $280</div></div>
+            <span style="color:var(--text-muted);font-size:18px;">›</span>
+          </div>
+          <div class="customer-item" onclick="showCustomerDetail(3)">
+            <div class="cust-avatar">DF</div>
+            <div style="flex:1;"><div class="cust-name">D. Ferraro</div><div class="cust-meta">55 Elm Dr · 1 job · TBD</div></div>
+            <span style="color:var(--text-muted);font-size:18px;">›</span>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- QUOTES & INVOICES -->
-      <div id="page-quotes" class="hidden">
-        <div class="page-header">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-            <div><div class="page-title">Quotes & Invoices</div><div class="page-subtitle">Create estimates and track payments</div></div>
-            <button class="btn-submit" onclick="showNewInvoiceModal()">+ New Quote</button>
-          </div>
-        </div>
-        <div class="stats-grid">
-          <div class="stat-card"><div class="stat-value">$6,820</div><div class="stat-label">Total Invoiced</div></div>
-          <div class="stat-card amber"><div class="stat-value">$2,450</div><div class="stat-label">Pending Payment</div></div>
-          <div class="stat-card rust"><div class="stat-value">$4,370</div><div class="stat-label">Collected</div></div>
-          <div class="stat-card bark"><div class="stat-value">4</div><div class="stat-label">Open Quotes</div></div>
-        </div>
-        <div class="card"><div class="card-title">Recent Quotes & Invoices</div>
-          <table class="data-table"><thead><tr><th>#</th><th>Customer</th><th>Job</th><th>Amount</th><th>Date</th><th>Status</th><th></th></tr></thead>
+    <!-- QUOTES -->
+    <div id="page-quotes" class="page">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <div class="page-title">Quotes & Invoices</div>
+        <button class="btn-small" onclick="showModal('invoiceModal')">+ New</button>
+      </div>
+      <div class="page-subtitle">Estimates and payment tracking</div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-value" style="font-size:24px;">$6,820</div><div class="stat-label">Invoiced</div></div>
+        <div class="stat-card amber"><div class="stat-value" style="font-size:24px;">$2,450</div><div class="stat-label">Pending</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Recent</div>
+        <div class="table-wrap">
+          <table class="data-table"><thead><tr><th>#</th><th>Customer</th><th>Amount</th><th>Status</th></tr></thead>
             <tbody>
-              <tr><td style="font-family:'IBM Plex Mono',monospace;font-size:12px;">INV-004</td><td>R. Battaglia</td><td>Oak Removal</td><td style="font-weight:600;">$1,850</td><td>Apr 20</td><td><span class="badge badge-amber">Pending</span></td><td><button class="btn-secondary" style="font-size:11px;padding:4px 10px;" onclick="showNewInvoiceModal()">View</button></td></tr>
-              <tr><td style="font-family:'IBM Plex Mono',monospace;font-size:12px;">INV-003</td><td>T. Ostrowski</td><td>Pruning</td><td style="font-weight:600;">$620</td><td>Apr 18</td><td><span class="badge badge-green">Paid</span></td><td><button class="btn-secondary" style="font-size:11px;padding:4px 10px;" onclick="showNewInvoiceModal()">View</button></td></tr>
-              <tr><td style="font-family:'IBM Plex Mono',monospace;font-size:12px;">QTE-002</td><td>D. Ferraro</td><td>Emergency Removal</td><td style="font-weight:600;">TBD</td><td>Apr 19</td><td><span class="badge badge-blue">Quote</span></td><td><button class="btn-secondary" style="font-size:11px;padding:4px 10px;" onclick="showNewInvoiceModal()">View</button></td></tr>
-              <tr><td style="font-family:'IBM Plex Mono',monospace;font-size:12px;">INV-001</td><td>R. Battaglia</td><td>Stump Grinding</td><td style="font-weight:600;">$350</td><td>Apr 10</td><td><span class="badge badge-green">Paid</span></td><td><button class="btn-secondary" style="font-size:11px;padding:4px 10px;" onclick="showNewInvoiceModal()">View</button></td></tr>
+              <tr><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;">INV-004</td><td>R. Battaglia</td><td style="font-weight:600;">$1,850</td><td><span class="badge badge-amber">Pending</span></td></tr>
+              <tr><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;">INV-003</td><td>T. Ostrowski</td><td style="font-weight:600;">$620</td><td><span class="badge badge-green">Paid</span></td></tr>
+              <tr><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;">QTE-002</td><td>D. Ferraro</td><td style="font-weight:600;">TBD</td><td><span class="badge badge-blue">Quote</span></td></tr>
+              <tr><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;">INV-001</td><td>R. Battaglia</td><td style="font-weight:600;">$350</td><td><span class="badge badge-green">Paid</span></td></tr>
             </tbody>
           </table>
         </div>
       </div>
+    </div>
 
-      <!-- SATELLITE VIEWER -->
-      <div id="page-satellite" class="hidden">
-        <div class="page-header"><div class="page-title">Site Viewer</div><div class="page-subtitle">Satellite and street view for any job address</div></div>
-        <div class="card">
-          <div class="card-title">Address Lookup</div>
-          <div class="address-lookup">
-            <input type="text" id="satelliteAddress" placeholder="Enter job site address (e.g. 412 Oak Street, Sharpsville, PA)" onkeydown="if(event.key==='Enter')loadSatellite()"/>
-            <button class="btn-submit" onclick="loadSatellite()">🛰 View Site</button>
+    <!-- PHOTOS -->
+    <div id="page-photos" class="page">
+      <div class="page-title">Job Photos</div>
+      <div class="page-subtitle">Before and after photos</div>
+      <div class="card">
+        <div class="card-title">Upload Photos</div>
+        <div class="form-row-2" style="margin-bottom:10px;">
+          <div><label class="form-label">Job Site</label>
+            <select class="field-select" id="photoJob"><option>412 Oak St</option><option>88 Maple Ave</option><option>207 Pine Rd</option><option>55 Elm Dr</option></select>
           </div>
-          <div style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap;">
-            <button class="btn-secondary" style="font-size:11px;padding:6px 12px;" onclick="quickSat('412 Oak Street, Sharpsville, PA')">412 Oak St</button>
-            <button class="btn-secondary" style="font-size:11px;padding:6px 12px;" onclick="quickSat('88 Maple Avenue, Sharpsville, PA')">88 Maple Ave</button>
-            <button class="btn-secondary" style="font-size:11px;padding:6px 12px;" onclick="quickSat('207 Pine Road, Sharon, PA')">207 Pine Rd</button>
-            <button class="btn-secondary" style="font-size:11px;padding:6px 12px;" onclick="quickSat('55 Elm Drive, Hermitage, PA')">55 Elm Dr</button>
+          <div><label class="form-label">Type</label>
+            <select class="field-select" id="photoType"><option>Before</option><option>During</option><option>After</option><option>Hazard</option></select>
           </div>
-          <div id="satAddressLabel" style="font-size:13px;color:var(--text-muted);margin-bottom:12px;"></div>
-          <div class="map-views">
-            <div>
-              <div class="map-label">Satellite View</div>
-              <div class="map-container" id="satMap">
-                <div class="map-placeholder">Enter an address above to load satellite view</div>
-              </div>
-            </div>
-            <div>
-              <div class="map-label">Street View</div>
-              <div class="map-container" id="streetMap">
-                <div class="map-placeholder">Enter an address above to load street view</div>
-              </div>
-            </div>
-          </div>
-          <div style="margin-top:12px;font-size:12px;color:var(--text-muted);">💡 Tip: Use satellite view to assess tree size, canopy spread, proximity to structures, and access routes before your quote visit.</div>
         </div>
-        <div class="card">
-          <div class="card-title">Quick Reference — Active Jobs</div>
-          <table class="data-table"><thead><tr><th>Job</th><th>Address</th><th>Customer</th><th></th></tr></thead>
+        <div style="border:2px dashed var(--border);border-radius:6px;padding:24px;text-align:center;cursor:pointer;" onclick="document.getElementById('photoInput').click()">
+          <div style="font-size:36px;">📷</div>
+          <div style="font-size:14px;font-weight:600;color:var(--text);margin-top:6px;">Tap to add photos</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:3px;">JPG, PNG, HEIC</div>
+        </div>
+        <input type="file" id="photoInput" accept="image/*" multiple capture="environment" style="display:none;" onchange="handlePhotos(event)"/>
+      </div>
+      <div class="card">
+        <div class="card-title">412 Oak St — Recent Photos</div>
+        <div class="photo-grid" id="photoGrid">
+          <div class="photo-add" onclick="document.getElementById('photoInput').click()">+</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAFETY -->
+    <div id="page-safety" class="page">
+      <div class="page-title">Safety Reports</div>
+      <div class="page-subtitle">Report incidents and hazards immediately</div>
+      <div class="card">
+        <div class="card-title">File a Report</div>
+        <div id="safetySuccess" class="success-msg hidden">✓ Report submitted. Management notified.</div>
+        <div class="form-group"><label class="form-label">Incident Type</label>
+          <select class="field-select" id="incidentType"><option>Near-Miss</option><option>Minor Injury</option><option>Equipment Issue</option><option>Hazard Observed</option><option>Property Damage</option><option>Other</option></select>
+        </div>
+        <div class="form-group"><label class="form-label">Date & Time</label><input type="datetime-local" class="field-input" id="incidentDate"/></div>
+        <div class="form-group"><label class="form-label">Location</label><input type="text" class="field-input" id="incidentLoc" placeholder="Job site or yard"/></div>
+        <div class="form-group"><label class="form-label">Description</label><textarea class="field-textarea" id="incidentDesc" placeholder="What happened?" style="min-height:100px;"></textarea></div>
+        <div class="form-group"><label class="form-label">Injuries / Damage</label><textarea class="field-textarea" id="incidentInjury" placeholder="List any injuries or damage..."></textarea></div>
+        <button class="btn-submit danger" onclick="submitIncident()">Submit Report</button>
+      </div>
+      <div class="card">
+        <div class="card-title">Recent Reports</div>
+        <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:5px;padding:10px 12px;margin-bottom:8px;"><div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#f57f17;">Near-Miss — Apr 15</div><div style="font-size:13px;margin-top:3px;">Falling branch within 10ft of crew. No injury. Hard hats worn.</div><div style="font-size:11px;color:var(--text-muted);margin-top:4px;">T. Davis</div></div>
+        <div style="background:#fde8e8;border:1px solid #f5a5a5;border-radius:5px;padding:10px 12px;margin-bottom:8px;"><div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--danger);">Equipment — Apr 10</div><div style="font-size:13px;margin-top:3px;">Chainsaw CS-002 chain guard loose. Taken out of service.</div><div style="font-size:11px;color:var(--text-muted);margin-top:4px;">M. Jenkins</div></div>
+      </div>
+    </div>
+
+    <!-- EQUIPMENT -->
+    <div id="page-equipment" class="page">
+      <div class="page-title">Equipment</div>
+      <div class="page-subtitle">Fleet and tool status</div>
+      <div class="card">
+        <div class="card-title">Status</div>
+        <div class="table-wrap">
+          <table class="data-table"><thead><tr><th>Item</th><th>ID</th><th>Status</th><th>Assigned</th></tr></thead>
             <tbody>
-              <tr><td>Oak Removal</td><td>412 Oak St, Sharpsville</td><td>R. Battaglia</td><td><button class="btn-secondary" style="font-size:11px;padding:4px 10px;" onclick="quickSat('412 Oak Street, Sharpsville, PA')">View</button></td></tr>
-              <tr><td>Pruning</td><td>88 Maple Ave, Sharpsville</td><td>T. Ostrowski</td><td><button class="btn-secondary" style="font-size:11px;padding:4px 10px;" onclick="quickSat('88 Maple Avenue, Sharpsville, PA')">View</button></td></tr>
-              <tr><td>Stump Grinding</td><td>207 Pine Rd, Sharon</td><td>M. Santoro</td><td><button class="btn-secondary" style="font-size:11px;padding:4px 10px;" onclick="quickSat('207 Pine Road, Sharon, PA')">View</button></td></tr>
-              <tr><td>Emergency</td><td>55 Elm Dr, Hermitage</td><td>D. Ferraro</td><td><button class="btn-secondary" style="font-size:11px;padding:4px 10px;" onclick="quickSat('55 Elm Drive, Hermitage, PA')">View</button></td></tr>
+              <tr><td>Stihl MS 400</td><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;">CS-001</td><td><span class="badge badge-green">Avail.</span></td><td>—</td></tr>
+              <tr><td>Stihl MS 400</td><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;">CS-002</td><td><span class="badge badge-red">Repair</span></td><td>Shop</td></tr>
+              <tr><td>Vermeer Chipper</td><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;">CH-001</td><td><span class="badge badge-amber">In Use</span></td><td>Jenkins</td></tr>
+              <tr><td>Toro Grinder</td><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;">SG-001</td><td><span class="badge badge-green">Avail.</span></td><td>—</td></tr>
+              <tr><td>F-350 (White)</td><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;">TK-001</td><td><span class="badge badge-amber">In Use</span></td><td>Davis</td></tr>
+              <tr><td>F-350 (Green)</td><td style="font-family:'IBM Plex Mono',monospace;font-size:11px;">TK-002</td><td><span class="badge badge-green">Avail.</span></td><td>—</td></tr>
             </tbody>
           </table>
         </div>
       </div>
-
-      <!-- PHOTOS -->
-      <div id="page-photos" class="hidden">
-        <div class="page-header"><div class="page-title">Job Photos</div><div class="page-subtitle">Before and after photos for each job site</div></div>
-        <div class="card">
-          <div class="card-title">Upload Photos</div>
-          <div class="form-row" style="margin-bottom:14px;">
-            <div><label class="form-label">Job Site</label>
-              <select class="form-select" id="photoJob">
-                <option>412 Oak St — Tree Removal</option><option>88 Maple Ave — Pruning</option>
-                <option>207 Pine Rd — Stump Grinding</option><option>55 Elm Dr — Emergency</option>
-              </select>
-            </div>
-            <div><label class="form-label">Photo Type</label>
-              <select class="form-select" id="photoType"><option>Before</option><option>During</option><option>After</option><option>Hazard</option></select>
-            </div>
-          </div>
-          <div id="photoDropZone" style="border:2px dashed var(--border);border-radius:4px;padding:32px;text-align:center;cursor:pointer;transition:border-color 0.15s;" onclick="document.getElementById('photoFileInput').click()" ondragover="event.preventDefault();this.style.borderColor='var(--leaf)'" ondragleave="this.style.borderColor=''" ondrop="handlePhotoDrop(event)">
-            <div style="font-size:32px;margin-bottom:8px;">📷</div>
-            <div style="font-size:14px;font-weight:600;color:var(--text);">Drop photos here or click to select</div>
-            <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">JPG, PNG, HEIC supported</div>
-          </div>
-          <input type="file" id="photoFileInput" accept="image/*" multiple style="display:none;" onchange="handlePhotoSelect(event)"/>
+      <div class="card">
+        <div class="card-title">Check Out Equipment</div>
+        <div id="equipSuccess" class="success-msg hidden">✓ Request sent to yard manager.</div>
+        <div class="form-group"><label class="form-label">Equipment</label>
+          <select class="field-select" id="equipItem"><option>CS-001 — Stihl MS 400</option><option>CH-001 — Vermeer Chipper</option><option>SG-001 — Toro Grinder</option><option>TK-002 — F-350 (Green)</option></select>
         </div>
-        <div class="card">
-          <div class="card-title">412 Oak St — Tree Removal</div>
-          <div style="margin-bottom:12px;"><span class="badge badge-blue" style="margin-right:6px;">Before (2)</span><span class="badge badge-amber">During (1)</span></div>
-          <div class="photo-grid" id="photoGrid">
-            <div class="photo-thumb-placeholder" onclick="document.getElementById('photoFileInput').click()">+</div>
-          </div>
+        <div class="form-group"><label class="form-label">Job Site</label><input type="text" class="field-input" id="equipJob" placeholder="Address or job name"/></div>
+        <button class="btn-submit" onclick="submitEquip()">Check Out</button>
+      </div>
+    </div>
+
+    <!-- AI -->
+    <div id="page-ai" class="page">
+      <div class="page-title">AI Assistant</div>
+      <div class="page-subtitle">Safety, tree care, policies & more</div>
+      <div class="card">
+        <div id="chatMessages" style="min-height:200px;max-height:360px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;margin-bottom:12px;">
+          <div style="background:var(--parchment);padding:10px 14px;border-radius:4px 4px 4px 0;font-size:13px;line-height:1.6;border:1px solid var(--border);max-width:90%;">Hey! Ask me anything about tree care, safety, OSHA, equipment, or pricing.</div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <input type="text" id="chatInput" style="flex:1;padding:11px 12px;border:1.5px solid var(--border);border-radius:6px;font-family:'IBM Plex Sans',sans-serif;font-size:15px;background:white;" placeholder="Ask anything..." onkeydown="if(event.key==='Enter')sendChat()"/>
+          <button id="chatSend" onclick="sendChat()" style="padding:11px 16px;background:var(--forest);color:var(--cream);border:none;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;">Send</button>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;">
+          <button class="btn-small outline" style="font-size:11px;" onclick="quickChat('What are OSHA requirements for arborists?')">OSHA</button>
+          <button class="btn-small outline" style="font-size:11px;" onclick="quickChat('Chainsaw safety tips')">Chainsaw Safety</button>
+          <button class="btn-small outline" style="font-size:11px;" onclick="quickChat('How do I identify a hazard tree?')">Hazard Trees</button>
+          <button class="btn-small outline" style="font-size:11px;" onclick="quickChat('How should I price a tree removal?')">Pricing</button>
         </div>
       </div>
+    </div>
 
-      <!-- SAFETY -->
-      <div id="page-incidents" class="hidden">
-        <div class="page-header"><div class="page-title">Safety Reports</div><div class="page-subtitle">Report incidents, near-misses, and hazards immediately</div></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-          <div>
-            <div class="card">
-              <div class="card-title">File a Safety Report</div>
-              <div id="safetySuccess" class="success-msg hidden">✓ Safety report submitted. Management has been notified.</div>
-              <div class="form-group-inline"><label class="form-label">Incident Type</label>
-                <select class="form-select" id="incidentType"><option>Near-Miss</option><option>Minor Injury</option><option>Equipment Issue</option><option>Hazard Observed</option><option>Property Damage</option><option>Other</option></select>
-              </div>
-              <div class="form-group-inline" style="margin-top:12px;"><label class="form-label">Date & Time</label><input type="datetime-local" class="form-input" id="incidentDate" style="margin-bottom:0;"/></div>
-              <div class="form-group-inline" style="margin-top:12px;"><label class="form-label">Location</label><input type="text" class="form-input" id="incidentLoc" placeholder="Job site address or yard" style="margin-bottom:0;"/></div>
-              <div class="form-group-inline" style="margin-top:12px;"><label class="form-label">Description</label><textarea class="form-textarea" id="incidentDesc" placeholder="Describe what happened in detail..." style="min-height:100px;"></textarea></div>
-              <div class="form-group-inline" style="margin-top:12px;"><label class="form-label">Injuries / Damage</label><textarea class="form-textarea" id="incidentInjury" placeholder="List any injuries or damage..."></textarea></div>
-              <div style="margin-top:16px;"><button class="btn-submit" onclick="submitIncident()" style="background:var(--rust);">Submit Report</button></div>
-            </div>
-          </div>
-          <div>
-            <div class="card"><div class="card-title">Recent Reports</div>
-              <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:3px;padding:10px 14px;margin-bottom:12px;"><div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#f57f17;">Near-Miss — Apr 15</div><div style="font-size:13px;color:var(--text);margin-top:4px;">Falling branch came within 10ft of crew member. Hard hats in place, no injury.</div><div style="font-size:11px;color:var(--text-muted);margin-top:6px;">Filed by: T. Davis</div></div>
-              <div style="background:#fde8e8;border:1px solid #f5a5a5;border-radius:3px;padding:10px 14px;margin-bottom:12px;"><div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--danger);">Equipment Issue — Apr 10</div><div style="font-size:13px;color:var(--text);margin-top:4px;">Chainsaw chain guard loose on Stihl MS 400. Taken out of service.</div><div style="font-size:11px;color:var(--text-muted);margin-top:6px;">Filed by: M. Jenkins</div></div>
-              <div style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:3px;padding:10px 14px;"><div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#2e7d32;">Hazard Cleared — Apr 7</div><div style="font-size:13px;color:var(--text);margin-top:4px;">Wasp nest found at 412 Oak St. Site cleared before work resumed.</div><div style="font-size:11px;color:var(--text-muted);margin-top:6px;">Filed by: S. Kowalski</div></div>
-            </div>
-          </div>
-        </div>
+    <!-- ADMIN -->
+    <div id="page-admin" class="page">
+      <div class="page-title">Admin</div>
+      <div class="page-subtitle">Employee overview</div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-value">5</div><div class="stat-label">Employees</div></div>
+        <div class="stat-card amber"><div class="stat-value">192</div><div class="stat-label">Hrs This Week</div></div>
+        <div class="stat-card rust"><div class="stat-value">$6,820</div><div class="stat-label">Revenue</div></div>
+        <div class="stat-card bark"><div class="stat-value">1</div><div class="stat-label">Safety Reports</div></div>
       </div>
-
-      <!-- EQUIPMENT -->
-      <div id="page-equipment" class="hidden">
-        <div class="page-header"><div class="page-title">Equipment Tracker</div><div class="page-subtitle">Check out tools and report issues</div></div>
-        <div class="card" style="margin-bottom:16px;"><div class="card-title">Fleet & Equipment Status</div>
-          <table class="data-table"><thead><tr><th>Item</th><th>ID</th><th>Status</th><th>Assigned To</th><th>Last Service</th><th>Next Service</th></tr></thead>
+      <div class="card">
+        <div class="card-title">All Employees</div>
+        <div class="table-wrap">
+          <table class="data-table"><thead><tr><th>Name</th><th>Role</th><th>Reg</th><th>OT</th><th>Status</th></tr></thead>
             <tbody>
-              <tr><td>Stihl MS 400 Chainsaw</td><td style="font-family:'IBM Plex Mono',monospace;font-size:12px;">CS-001</td><td><span class="badge badge-green">Available</span></td><td>—</td><td>Mar 15</td><td><span style="color:var(--amber);">Apr 15 ⚠</span></td></tr>
-              <tr><td>Stihl MS 400 Chainsaw</td><td style="font-family:'IBM Plex Mono',monospace;font-size:12px;">CS-002</td><td><span class="badge badge-red">Out of Service</span></td><td>Repair Shop</td><td>—</td><td>—</td></tr>
-              <tr><td>Vermeer BC1500 Chipper</td><td style="font-family:'IBM Plex Mono',monospace;font-size:12px;">CH-001</td><td><span class="badge badge-amber">In Use</span></td><td>M. Jenkins</td><td>Apr 1</td><td>Jul 1</td></tr>
-              <tr><td>Toro Stump Grinder</td><td style="font-family:'IBM Plex Mono',monospace;font-size:12px;">SG-001</td><td><span class="badge badge-green">Available</span></td><td>—</td><td>Apr 5</td><td>Jul 5</td></tr>
-              <tr><td>F-350 Truck (White)</td><td style="font-family:'IBM Plex Mono',monospace;font-size:12px;">TK-001</td><td><span class="badge badge-amber">In Use</span></td><td>T. Davis</td><td>Apr 10</td><td>Jul 10</td></tr>
-              <tr><td>F-350 Truck (Green)</td><td style="font-family:'IBM Plex Mono',monospace;font-size:12px;">TK-002</td><td><span class="badge badge-green">Available</span></td><td>—</td><td>Apr 12</td><td>Jul 12</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="card"><div class="card-title">Request / Check Out Equipment</div>
-          <div id="equipSuccess" class="success-msg hidden">✓ Request submitted to yard manager.</div>
-          <div class="form-row">
-            <div><label class="form-label">Equipment</label>
-              <select class="form-select" id="equipItem"><option>CS-001 — Stihl MS 400 Chainsaw</option><option>CH-001 — Vermeer BC1500 Chipper</option><option>SG-001 — Toro Stump Grinder</option><option>TK-002 — F-350 Truck (Green)</option></select>
-            </div>
-            <div><label class="form-label">Job Site</label><input type="text" class="form-input" id="equipJob" placeholder="Address or job name" style="margin-bottom:0;"/></div>
-          </div>
-          <div style="margin-top:14px;"><button class="btn-submit" onclick="submitEquip()">Check Out</button></div>
-        </div>
-      </div>
-
-      <!-- AI ASSISTANT -->
-      <div id="page-ai" class="hidden">
-        <div class="page-header"><div class="page-title">AI Assistant</div><div class="page-subtitle">Ask about safety, tree care, company policies, and more</div></div>
-        <div class="card">
-          <div class="chat-messages" id="chatMessages">
-            <div class="msg assistant">Hey! I'm the Penn West Tree assistant. Ask me anything about tree care, safety procedures, OSHA guidelines, equipment, job site tips, or company policies. What do you need?</div>
-          </div>
-          <hr class="divider" style="margin:12px 0;">
-          <div class="chat-input-row">
-            <input type="text" class="chat-input" id="chatInput" placeholder="Ask about safety, tree species, equipment, policies..." onkeydown="if(event.key==='Enter')sendChat()"/>
-            <button class="btn-send" id="chatSend" onclick="sendChat()">Send</button>
-          </div>
-          <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
-            <button class="btn-secondary" style="font-size:11px;padding:6px 12px;" onclick="quickChat('What are OSHA requirements for tree work?')">OSHA Requirements</button>
-            <button class="btn-secondary" style="font-size:11px;padding:6px 12px;" onclick="quickChat('How do I safely use a chainsaw?')">Chainsaw Safety</button>
-            <button class="btn-secondary" style="font-size:11px;padding:6px 12px;" onclick="quickChat('How do I identify a hazard tree?')">Hazard Trees</button>
-            <button class="btn-secondary" style="font-size:11px;padding:6px 12px;" onclick="quickChat('How should I price a tree removal job?')">Pricing Help</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- ADMIN -->
-      <div id="page-admin" class="hidden">
-        <div class="page-header"><div class="page-title">Employee Overview</div><div class="page-subtitle">All staff hours and status — Admin View</div></div>
-        <div class="stats-grid">
-          <div class="stat-card"><div class="stat-value">5</div><div class="stat-label">Active Employees</div></div>
-          <div class="stat-card amber"><div class="stat-value">192</div><div class="stat-label">Total Hours This Week</div></div>
-          <div class="stat-card rust"><div class="stat-value">3</div><div class="stat-label">Jobs In Progress</div></div>
-          <div class="stat-card bark"><div class="stat-value">$6,820</div><div class="stat-label">Revenue This Month</div></div>
-        </div>
-        <div class="card"><div class="card-title">All Employees — Hours This Week</div>
-          <table class="data-table"><thead><tr><th>Employee</th><th>Role</th><th>Regular</th><th>OT</th><th>Checked In</th><th>Status</th></tr></thead>
-            <tbody>
-              <tr><td><strong>Mike Jenkins</strong></td><td>Lead Climber</td><td>37.0</td><td>1.5</td><td>8:02 AM</td><td><span class="badge badge-green">On Site</span></td></tr>
-              <tr><td>Sarah Kowalski</td><td>Ground Crew</td><td>40.0</td><td>2.0</td><td>7:55 AM</td><td><span class="badge badge-green">On Site</span></td></tr>
-              <tr><td>Tom Davis</td><td>Equipment Op.</td><td>38.5</td><td>0</td><td>8:10 AM</td><td><span class="badge badge-green">On Site</span></td></tr>
-              <tr><td>Carlos Reyes</td><td>Ground Crew</td><td>36.0</td><td>0</td><td>—</td><td><span class="badge badge-amber">Off Today</span></td></tr>
-              <tr><td>Dana Polk</td><td>Admin</td><td>40.0</td><td>0</td><td>9:00 AM</td><td><span class="badge badge-blue">Office</span></td></tr>
+              <tr><td><strong>M. Jenkins</strong></td><td>Lead Climber</td><td>37</td><td>1.5</td><td><span class="badge badge-green">On Site</span></td></tr>
+              <tr><td>S. Kowalski</td><td>Ground Crew</td><td>40</td><td>2</td><td><span class="badge badge-green">On Site</span></td></tr>
+              <tr><td>T. Davis</td><td>Equip. Op.</td><td>38.5</td><td>0</td><td><span class="badge badge-green">On Site</span></td></tr>
+              <tr><td>C. Reyes</td><td>Ground Crew</td><td>36</td><td>0</td><td><span class="badge badge-amber">Off</span></td></tr>
+              <tr><td>D. Polk</td><td>Admin</td><td>40</td><td>0</td><td><span class="badge badge-blue">Office</span></td></tr>
             </tbody>
           </table>
         </div>
       </div>
+    </div>
 
-    </main>
+  </div><!-- end app-body -->
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button class="nav-tab active" id="tab-dashboard" onclick="showPage('dashboard','tab-dashboard')">
+      <span class="nav-icon">⊞</span><span class="nav-label">Home</span>
+    </button>
+    <button class="nav-tab" id="tab-hours" onclick="showPage('hours','tab-hours')">
+      <span class="nav-icon">⏱</span><span class="nav-label">Hours</span>
+    </button>
+    <button class="nav-tab" id="tab-jobs" onclick="showPage('jobs','tab-jobs')">
+      <span class="nav-icon">🪵</span><span class="nav-label">Jobs</span>
+    </button>
+    <button class="nav-tab" id="tab-satellite" onclick="showPage('satellite','tab-satellite')">
+      <span class="nav-icon">🛰</span><span class="nav-label">Sites</span>
+    </button>
+    <button class="nav-tab" id="tab-more" onclick="toggleMoreMenu()">
+      <span class="nav-icon">⋯</span><span class="nav-label">More</span>
+    </button>
+  </nav>
+
+  <!-- MORE MENU -->
+  <div id="moreMenu" class="more-menu hidden">
+    <div class="more-item" onclick="showPage('customers','tab-more');closeMore()"><span class="mi-icon">👤</span>Customers</div>
+    <div class="more-item" onclick="showPage('quotes','tab-more');closeMore()"><span class="mi-icon">💰</span>Quotes & Invoices</div>
+    <div class="more-item" onclick="showPage('photos','tab-more');closeMore()"><span class="mi-icon">📷</span>Job Photos</div>
+    <div class="more-item" onclick="showPage('safety','tab-more');closeMore()"><span class="mi-icon">⚠</span>Safety Reports</div>
+    <div class="more-item" onclick="showPage('equipment','tab-more');closeMore()"><span class="mi-icon">🔧</span>Equipment</div>
+    <div class="more-item" onclick="showPage('ai','tab-more');closeMore()"><span class="mi-icon">🌿</span>AI Assistant</div>
+    <div id="adminMenuItem" class="more-item hidden" onclick="showPage('admin','tab-more');closeMore()"><span class="mi-icon">👥</span>Admin</div>
   </div>
-</div>
+
+</div><!-- end appShell -->
 
 <!-- MODALS -->
-<div id="invoiceModal" class="modal-overlay hidden">
-  <div class="modal">
+<div id="invoiceModal" class="modal-overlay hidden" onclick="if(event.target===this)hideModal('invoiceModal')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
     <div class="modal-title">New Quote / Invoice</div>
-    <div class="form-row" style="margin-bottom:14px;">
-      <div><label class="form-label">Customer</label><input type="text" class="form-input" placeholder="Customer name" style="margin-bottom:0;"/></div>
-      <div><label class="form-label">Job Type</label><input type="text" class="form-input" placeholder="e.g. Tree Removal" style="margin-bottom:0;"/></div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">Customer</label><input type="text" class="field-input" placeholder="Customer name"/></div>
+      <div class="form-group"><label class="form-label">Job Type</label><input type="text" class="field-input" placeholder="e.g. Removal"/></div>
     </div>
-    <div class="form-group-inline"><label class="form-label">Address</label><input type="text" class="form-input" placeholder="Job site address" style="margin-bottom:0;"/></div>
-    <div style="margin-top:16px;margin-bottom:8px;"><div class="card-title">Line Items</div>
-      <div id="invoiceLines">
-        <div class="invoice-line"><input type="text" class="invoice-desc" placeholder="Description" style="flex:1;padding:8px 10px;border:1.5px solid var(--border);border-radius:3px;font-family:'IBM Plex Sans',sans-serif;font-size:13px;"/><input type="number" class="invoice-qty" placeholder="Qty" value="1" style="width:60px;padding:8px 10px;border:1.5px solid var(--border);border-radius:3px;font-family:'IBM Plex Sans',sans-serif;font-size:13px;" oninput="updateTotal(this)"/><input type="number" class="invoice-price" placeholder="Price" style="width:90px;padding:8px 10px;border:1.5px solid var(--border);border-radius:3px;font-family:'IBM Plex Sans',sans-serif;font-size:13px;" oninput="updateTotal(this)"/><div class="invoice-total" id="lineTotal0">$0</div></div>
-      </div>
-      <button class="btn-secondary" style="margin-top:8px;font-size:12px;" onclick="addInvoiceLine()">+ Add Line</button>
+    <div class="form-group"><label class="form-label">Address</label><input type="text" class="field-input" placeholder="Job site address"/></div>
+    <div class="card-title" style="margin-top:8px;">Line Items</div>
+    <div id="invoiceLines">
+      <div class="inv-line"><input type="text" class="inv-desc" placeholder="Description"/><input type="number" class="inv-qty" value="1" oninput="calcInvoice()"/><input type="number" class="inv-price" placeholder="$" oninput="calcInvoice()"/><div class="inv-tot">$0</div></div>
     </div>
-    <div class="invoice-summary">
-      <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="opacity:0.7;font-size:13px;">Subtotal</span><span id="invoiceSubtotal" style="font-weight:600;">$0.00</span></div>
-      <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="opacity:0.7;font-size:13px;">Tax (6%)</span><span id="invoiceTax" style="font-weight:600;">$0.00</span></div>
-      <div style="display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.2);padding-top:8px;margin-top:4px;"><span style="font-size:16px;font-weight:600;">Total</span><span id="invoiceTotal" style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;">$0.00</span></div>
+    <button class="btn-small outline" style="margin-top:8px;margin-bottom:12px;" onclick="addInvLine()">+ Line</button>
+    <div class="inv-summary">
+      <div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:13px;"><span style="opacity:0.7;">Subtotal</span><span id="invSub">$0.00</span></div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:13px;"><span style="opacity:0.7;">Tax (6%)</span><span id="invTax">$0.00</span></div>
+      <div style="display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,0.2);padding-top:8px;"><span style="font-size:15px;font-weight:600;">Total</span><span id="invTotal" style="font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;">$0.00</span></div>
     </div>
-    <div style="display:flex;gap:10px;margin-top:20px;">
-      <button class="btn-submit" onclick="document.getElementById('invoiceModal').classList.add('hidden')">Save Quote</button>
-      <button class="btn-secondary" onclick="document.getElementById('invoiceModal').classList.add('hidden')">Cancel</button>
+    <div style="display:flex;gap:10px;margin-top:16px;">
+      <button class="btn-submit" style="flex:1;" onclick="hideModal('invoiceModal')">Save</button>
+      <button class="btn-outline" onclick="hideModal('invoiceModal')">Cancel</button>
     </div>
   </div>
 </div>
 
-<div id="addJobModal" class="modal-overlay hidden">
-  <div class="modal">
+<div id="addJobModal" class="modal-overlay hidden" onclick="if(event.target===this)hideModal('addJobModal')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
     <div class="modal-title">Add New Job</div>
-    <div class="form-row" style="margin-bottom:14px;">
-      <div><label class="form-label">Job Type</label>
-        <select class="form-select"><option>Tree Removal</option><option>Pruning/Trimming</option><option>Stump Grinding</option><option>Emergency</option><option>Lot Clearing</option><option>Other</option></select>
-      </div>
-      <div><label class="form-label">Status</label>
-        <select class="form-select"><option>Scheduled</option><option>In Progress</option><option>Pending</option><option>Completed</option></select>
-      </div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">Job Type</label><select class="field-select"><option>Tree Removal</option><option>Pruning</option><option>Stump Grinding</option><option>Emergency</option><option>Other</option></select></div>
+      <div class="form-group"><label class="form-label">Status</label><select class="field-select"><option>Scheduled</option><option>In Progress</option><option>Pending</option></select></div>
     </div>
-    <div class="form-group-inline"><label class="form-label">Address</label><input type="text" class="form-input" placeholder="Job site address" style="margin-bottom:0;"/></div>
-    <div class="form-row" style="margin-top:14px;">
-      <div><label class="form-label">Customer</label><input type="text" class="form-input" placeholder="Customer name" style="margin-bottom:0;"/></div>
-      <div><label class="form-label">Date</label><input type="date" class="form-input" style="margin-bottom:0;"/></div>
+    <div class="form-group"><label class="form-label">Address</label><input type="text" class="field-input" placeholder="Job site address"/></div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">Customer</label><input type="text" class="field-input" placeholder="Name"/></div>
+      <div class="form-group"><label class="form-label">Date</label><input type="date" class="field-input"/></div>
     </div>
-    <div class="form-group-inline" style="margin-top:14px;"><label class="form-label">Crew Members</label><input type="text" class="form-input" placeholder="e.g. Jenkins, Kowalski" style="margin-bottom:0;"/></div>
-    <div class="form-row" style="margin-top:14px;">
-      <div><label class="form-label">Estimated Value</label><input type="text" class="form-input" placeholder="$0.00" style="margin-bottom:0;"/></div>
-      <div><label class="form-label">Est. Hours</label><input type="number" class="form-input" placeholder="0" style="margin-bottom:0;"/></div>
+    <div class="form-group"><label class="form-label">Crew</label><input type="text" class="field-input" placeholder="e.g. Jenkins, Davis"/></div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">Est. Value</label><input type="text" class="field-input" placeholder="$0"/></div>
+      <div class="form-group"><label class="form-label">Est. Hours</label><input type="number" class="field-input" placeholder="0"/></div>
     </div>
-    <div class="form-group-inline" style="margin-top:14px;"><label class="form-label">Notes</label><textarea class="form-textarea" placeholder="Job details, hazards, special instructions..."></textarea></div>
-    <div style="display:flex;gap:10px;margin-top:20px;">
-      <button class="btn-submit" onclick="document.getElementById('addJobModal').classList.add('hidden')">Save Job</button>
-      <button class="btn-secondary" onclick="document.getElementById('addJobModal').classList.add('hidden')">Cancel</button>
+    <div class="form-group"><label class="form-label">Notes</label><textarea class="field-textarea" placeholder="Details, hazards, instructions..."></textarea></div>
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <button class="btn-submit" style="flex:1;" onclick="hideModal('addJobModal')">Save Job</button>
+      <button class="btn-outline" onclick="hideModal('addJobModal')">Cancel</button>
     </div>
   </div>
 </div>
 
-<div id="addCustomerModal" class="modal-overlay hidden">
-  <div class="modal">
-    <div class="modal-title">Add New Customer</div>
-    <div class="form-row" style="margin-bottom:14px;">
-      <div><label class="form-label">First Name</label><input type="text" class="form-input" style="margin-bottom:0;"/></div>
-      <div><label class="form-label">Last Name</label><input type="text" class="form-input" style="margin-bottom:0;"/></div>
+<div id="addCustomerModal" class="modal-overlay hidden" onclick="if(event.target===this)hideModal('addCustomerModal')">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Add Customer</div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">First Name</label><input type="text" class="field-input"/></div>
+      <div class="form-group"><label class="form-label">Last Name</label><input type="text" class="field-input"/></div>
     </div>
-    <div class="form-group-inline"><label class="form-label">Address</label><input type="text" class="form-input" placeholder="Street address" style="margin-bottom:0;"/></div>
-    <div class="form-row" style="margin-top:14px;">
-      <div><label class="form-label">Phone</label><input type="tel" class="form-input" placeholder="(724) 555-0000" style="margin-bottom:0;"/></div>
-      <div><label class="form-label">Email</label><input type="email" class="form-input" placeholder="email@example.com" style="margin-bottom:0;"/></div>
+    <div class="form-group"><label class="form-label">Address</label><input type="text" class="field-input" placeholder="Street address"/></div>
+    <div class="form-row-2">
+      <div class="form-group"><label class="form-label">Phone</label><input type="tel" class="field-input" placeholder="(724) 555-0000"/></div>
+      <div class="form-group"><label class="form-label">Email</label><input type="email" class="field-input" placeholder="email@..."/></div>
     </div>
-    <div class="form-group-inline" style="margin-top:14px;"><label class="form-label">Notes</label><textarea class="form-textarea" placeholder="Any notes about this customer..."></textarea></div>
-    <div style="display:flex;gap:10px;margin-top:20px;">
-      <button class="btn-submit" onclick="document.getElementById('addCustomerModal').classList.add('hidden')">Save Customer</button>
-      <button class="btn-secondary" onclick="document.getElementById('addCustomerModal').classList.add('hidden')">Cancel</button>
+    <div class="form-group"><label class="form-label">Notes</label><textarea class="field-textarea" placeholder="Notes about this customer..."></textarea></div>
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <button class="btn-submit" style="flex:1;" onclick="hideModal('addCustomerModal')">Save</button>
+      <button class="btn-outline" onclick="hideModal('addCustomerModal')">Cancel</button>
     </div>
   </div>
+</div>
+
+<div id="customerDetailModal" class="modal-overlay hidden" onclick="if(event.target===this)hideModal('customerDetailModal')">
+  <div class="modal-sheet" id="customerDetailContent"></div>
 </div>
 
 <script>
 const USERS = {
-  'mike.jenkins': { pass:'tree1234', name:'Mike Jenkins', role:'Lead Climber', initials:'MJ', isAdmin:false },
-  'sarah.kowalski': { pass:'tree1234', name:'Sarah Kowalski', role:'Ground Crew', initials:'SK', isAdmin:false },
-  'tom.davis': { pass:'tree1234', name:'Tom Davis', role:'Equipment Op.', initials:'TD', isAdmin:false },
-  'admin': { pass:'admin123', name:'Dana Polk', role:'Admin', initials:'DP', isAdmin:true }
+  'mike.jenkins':{pass:'tree1234',name:'Mike Jenkins',role:'Lead Climber',initials:'MJ',isAdmin:false},
+  'sarah.kowalski':{pass:'tree1234',name:'Sarah Kowalski',role:'Ground Crew',initials:'SK',isAdmin:false},
+  'tom.davis':{pass:'tree1234',name:'Tom Davis',role:'Equipment Op.',initials:'TD',isAdmin:false},
+  'admin':{pass:'admin123',name:'Dana Polk',role:'Admin',initials:'DP',isAdmin:true}
 };
-
-const CUSTOMERS = [
-  { name:'R. Battaglia', address:'412 Oak St, Sharpsville', phone:'(724) 555-0101', email:'rbattaglia@email.com', jobs:3, total:'$4,200', notes:'Prefers morning appointments. Has a dog — keep gate closed.' },
-  { name:'T. Ostrowski', address:'88 Maple Ave, Sharpsville', phone:'(724) 555-0182', email:'tostrowski@email.com', jobs:2, total:'$1,240', notes:'Recurring seasonal pruning customer.' },
-  { name:'M. Santoro', address:'207 Pine Rd, Sharon', phone:'(724) 555-0263', email:'msantoro@email.com', jobs:1, total:'$280', notes:'New customer from referral.' },
-  { name:'D. Ferraro', address:'55 Elm Dr, Hermitage', phone:'(724) 555-0344', email:'dferraro@email.com', jobs:1, total:'TBD', notes:'Emergency removal — storm damage.' }
+const CUSTOMERS=[
+  {name:'R. Battaglia',initials:'RB',address:'412 Oak St, Sharpsville',phone:'(724) 555-0101',email:'rbattaglia@email.com',jobs:3,total:'$4,200',notes:'Prefers mornings. Has a dog — keep gate closed.'},
+  {name:'T. Ostrowski',initials:'TO',address:'88 Maple Ave, Sharpsville',phone:'(724) 555-0182',email:'tostrowski@email.com',jobs:2,total:'$1,240',notes:'Recurring seasonal pruning customer.'},
+  {name:'M. Santoro',initials:'MS',address:'207 Pine Rd, Sharon',phone:'(724) 555-0263',email:'msantoro@email.com',jobs:1,total:'$280',notes:'New customer from referral.'},
+  {name:'D. Ferraro',initials:'DF',address:'55 Elm Dr, Hermitage',phone:'(724) 555-0344',email:'dferraro@email.com',jobs:1,total:'TBD',notes:'Emergency removal — storm damage.'}
 ];
 
-let currentUser = null;
-let chatHistory = [];
-let lineCount = 1;
+let currentUser=null, chatHistory=[], checkedIn=false;
 
-function doLogin() {
-  const u = document.getElementById('loginUser').value.trim().toLowerCase();
-  const p = document.getElementById('loginPass').value;
-  const err = document.getElementById('loginError');
-  if (USERS[u] && USERS[u].pass === p) {
-    currentUser = { username:u, ...USERS[u] };
+function doLogin(){
+  const u=document.getElementById('loginUser').value.trim().toLowerCase();
+  const p=document.getElementById('loginPass').value;
+  const err=document.getElementById('loginError');
+  if(USERS[u]&&USERS[u].pass===p){
+    currentUser={username:u,...USERS[u]};
     err.classList.add('hidden');
     document.getElementById('loginScreen').classList.add('hidden');
     document.getElementById('appShell').classList.remove('hidden');
+    document.getElementById('appShell').style.display='flex';
     setupUser();
   } else {
-    err.textContent = 'Invalid username or password.';
+    err.textContent='Invalid username or password.';
     err.classList.remove('hidden');
   }
 }
-document.getElementById('loginPass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+document.getElementById('loginPass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
 
-function setupUser() {
-  document.getElementById('headerAvatar').textContent = currentUser.initials;
-  document.getElementById('headerName').textContent = currentUser.name;
-  document.getElementById('headerRole').textContent = currentUser.role;
-  const fn = currentUser.name.split(' ')[0];
-  const h = new Date().getHours();
-  const greet = h < 12 ? 'Good Morning' : h < 17 ? 'Good Afternoon' : 'Good Evening';
-  document.getElementById('dashGreeting').textContent = greet + ', ' + fn;
-  document.getElementById('dashDate').textContent = new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('entryDate').value = today;
-  const now = new Date();
-  document.getElementById('entryIn').value = now.getHours().toString().padStart(2,'0')+':00';
-  document.getElementById('incidentDate').value = now.toISOString().slice(0,16);
-  if (currentUser.isAdmin) document.getElementById('adminNavSection').classList.remove('hidden');
-  simulateWeather();
+function setupUser(){
+  document.getElementById('headerAvatar').textContent=currentUser.initials;
+  document.getElementById('headerName').textContent=currentUser.name.split(' ')[0];
+  const h=new Date().getHours();
+  const greet=h<12?'Good Morning':h<17?'Good Afternoon':'Good Evening';
+  document.getElementById('dashGreeting').textContent=greet+', '+currentUser.name.split(' ')[0];
+  document.getElementById('dashDate').textContent=new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+  const today=new Date().toISOString().split('T')[0];
+  document.getElementById('entryDate').value=today;
+  const now=new Date();
+  document.getElementById('entryIn').value=now.getHours().toString().padStart(2,'0')+':00';
+  document.getElementById('incidentDate').value=now.toISOString().slice(0,16);
+  if(currentUser.isAdmin)document.getElementById('adminMenuItem').classList.remove('hidden');
+  const wx=[['64°F','Partly Cloudy'],['61°F','Overcast'],['58°F','Light Rain'],['72°F','Sunny'],['55°F','Windy']];
+  const w=wx[Math.floor(Math.random()*wx.length)];
+  document.getElementById('weatherStat').textContent=w[0];
+  document.getElementById('weatherLabel').textContent=w[1];
 }
 
-function simulateWeather() {
-  const data = [['61°F','Partly Cloudy'],['64°F','Overcast'],['58°F','Light Rain'],['72°F','Sunny'],['55°F','Windy']];
-  const d = data[Math.floor(Math.random()*data.length)];
-  document.getElementById('weatherTemp').textContent = d[0];
-  document.getElementById('weatherDesc').textContent = d[1];
-}
-
-function doLogout() {
-  currentUser = null;
+function doLogout(){
+  currentUser=null;
   document.getElementById('appShell').classList.add('hidden');
   document.getElementById('loginScreen').classList.remove('hidden');
-  document.getElementById('loginUser').value = '';
-  document.getElementById('loginPass').value = '';
-  chatHistory = [];
-  document.getElementById('chatMessages').innerHTML = '<div class="msg assistant">Hey! I\'m the Penn West Tree assistant. Ask me anything about tree care, safety procedures, OSHA guidelines, equipment, job site tips, or company policies. What do you need?</div>';
+  document.getElementById('loginUser').value='';
+  document.getElementById('loginPass').value='';
+  chatHistory=[];
 }
 
-function showPage(page) {
-  document.querySelectorAll('[id^="page-"]').forEach(p => p.classList.add('hidden'));
-  document.getElementById('page-'+page).classList.remove('hidden');
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(item => {
-    if (item.getAttribute('onclick') && item.getAttribute('onclick').includes("'"+page+"'")) item.classList.add('active');
-  });
+function showPage(page,tabId){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  if(tabId)document.getElementById(tabId).classList.add('active');
+  document.getElementById('appBody').scrollTop=0;
 }
 
-function submitHours() {
-  const date = document.getElementById('entryDate').value;
-  const inT = document.getElementById('entryIn').value;
-  const outT = document.getElementById('entryOut').value;
-  const job = document.getElementById('entryJob').value;
-  const type = document.getElementById('entryType').value;
-  if (!date || !inT || !outT) { alert('Please fill in date, time in, and time out.'); return; }
-  const [ih,im] = inT.split(':').map(Number);
-  const [oh,om] = outT.split(':').map(Number);
-  const hrs = ((oh*60+om)-(ih*60+im))/60;
-  if (hrs <= 0) { alert('Time out must be after time in.'); return; }
-  const tbody = document.getElementById('hoursTableBody');
-  const shortDate = new Date(date+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});
-  const shortJob = job.split('—')[0].trim();
-  const bc = type==='Regular'?'badge-green':type==='Overtime'?'badge-amber':'badge-blue';
-  tbody.insertAdjacentHTML('afterbegin',`<tr><td>${shortDate}</td><td>${shortJob}</td><td>${hrs.toFixed(1)}</td><td><span class="badge ${bc}">${type}</span></td></tr>`);
-  const prev = parseFloat(document.getElementById('totalHours').textContent);
-  document.getElementById('totalHours').textContent = (prev+hrs).toFixed(1);
-  const s = document.getElementById('hoursSuccess');
+function toggleMoreMenu(){
+  const m=document.getElementById('moreMenu');
+  m.classList.toggle('hidden');
+}
+function closeMore(){document.getElementById('moreMenu').classList.add('hidden');}
+document.addEventListener('click',e=>{
+  const menu=document.getElementById('moreMenu');
+  const moreBtn=document.getElementById('tab-more');
+  if(!menu.contains(e.target)&&!moreBtn.contains(e.target))menu.classList.add('hidden');
+});
+
+function showModal(id){document.getElementById(id).classList.remove('hidden');}
+function hideModal(id){document.getElementById(id).classList.add('hidden');}
+
+function submitHours(){
+  const date=document.getElementById('entryDate').value;
+  const inT=document.getElementById('entryIn').value;
+  const outT=document.getElementById('entryOut').value;
+  const job=document.getElementById('entryJob').value;
+  const type=document.getElementById('entryType').value;
+  if(!date||!inT||!outT){alert('Fill in date, time in, and time out.');return;}
+  const [ih,im]=inT.split(':').map(Number);
+  const [oh,om]=outT.split(':').map(Number);
+  const hrs=((oh*60+om)-(ih*60+im))/60;
+  if(hrs<=0){alert('Time out must be after time in.');return;}
+  const tbody=document.getElementById('hoursTableBody');
+  const sd=new Date(date+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  const sj=job.split('—')[0].trim();
+  const bc=type==='Regular'?'badge-green':type==='Overtime'?'badge-amber':'badge-blue';
+  const st=type==='Regular'?'Reg':type==='Overtime'?'OT':type.slice(0,4);
+  tbody.insertAdjacentHTML('afterbegin',`<tr><td>${sd}</td><td>${sj}</td><td>${hrs.toFixed(1)}</td><td><span class="badge ${bc}">${st}</span></td></tr>`);
+  const prev=parseFloat(document.getElementById('totalHours').textContent);
+  document.getElementById('totalHours').textContent=(prev+hrs).toFixed(1);
+  const s=document.getElementById('hoursSuccess');
   s.classList.remove('hidden');
   setTimeout(()=>s.classList.add('hidden'),3000);
-  document.getElementById('entryNotes').value = '';
+  document.getElementById('entryNotes').value='';
 }
 
-function submitIncident() {
-  const loc = document.getElementById('incidentLoc').value;
-  const desc = document.getElementById('incidentDesc').value;
-  if (!loc || !desc) { alert('Please fill in location and description.'); return; }
-  const s = document.getElementById('safetySuccess');
+function doCheckin(){
+  const t=new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+  checkedIn=true;
+  document.getElementById('checkinStatus').textContent='✅ Checked in at '+t;
+  document.getElementById('checkinStatus').style.color='var(--success)';
+  document.getElementById('checkinLog').textContent='In: '+t;
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(p=>{
+      document.getElementById('checkinLog').textContent='In: '+t+' · GPS: '+p.coords.latitude.toFixed(4)+', '+p.coords.longitude.toFixed(4);
+    },()=>{});
+  }
+}
+function doCheckout(){
+  if(!checkedIn){alert('You have not checked in yet.');return;}
+  const t=new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('checkinStatus').textContent='🏁 Checked out at '+t;
+  document.getElementById('checkinStatus').style.color='var(--text-muted)';
+  const prev=document.getElementById('checkinLog').textContent;
+  document.getElementById('checkinLog').textContent=prev+' · Out: '+t;
+  checkedIn=false;
+}
+
+function loadSatellite(){
+  const addr=document.getElementById('satelliteAddress').value.trim();
+  if(!addr){alert('Enter an address.');return;}
+  const enc=encodeURIComponent(addr);
+  document.getElementById('satLabel').textContent='📍 '+addr;
+  document.getElementById('satMap').innerHTML=`<iframe src="https://maps.google.com/maps?q=${enc}&t=k&z=18&output=embed"></iframe>`;
+  document.getElementById('streetMap').innerHTML=`<iframe src="https://maps.google.com/maps?q=${enc}&layer=c&output=svembed"></iframe>`;
+}
+function quickSat(addr){document.getElementById('satelliteAddress').value=addr;loadSatellite();}
+function goSat(addr){showPage('satellite','tab-satellite');document.getElementById('satelliteAddress').value=addr;loadSatellite();}
+
+function submitIncident(){
+  const loc=document.getElementById('incidentLoc').value;
+  const desc=document.getElementById('incidentDesc').value;
+  if(!loc||!desc){alert('Fill in location and description.');return;}
+  const s=document.getElementById('safetySuccess');
   s.classList.remove('hidden');
   setTimeout(()=>s.classList.add('hidden'),4000);
   document.getElementById('incidentLoc').value='';
@@ -800,188 +839,114 @@ function submitIncident() {
   document.getElementById('incidentInjury').value='';
 }
 
-function submitEquip() {
-  const s = document.getElementById('equipSuccess');
+function submitEquip(){
+  const s=document.getElementById('equipSuccess');
   s.classList.remove('hidden');
   setTimeout(()=>s.classList.add('hidden'),3000);
   document.getElementById('equipJob').value='';
 }
 
-let checkedIn = false;
-function doCheckin() {
-  const now = new Date();
-  const t = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
-  checkedIn = true;
-  document.getElementById('checkinStatus').textContent = '✅ Checked in at '+t;
-  document.getElementById('checkinStatus').style.color = 'var(--success)';
-  document.getElementById('checkinLog').textContent = 'Check-in: '+t;
-  if(navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(pos => {
-      document.getElementById('checkinLog').textContent = 'Check-in: '+t+' · GPS: '+pos.coords.latitude.toFixed(4)+', '+pos.coords.longitude.toFixed(4);
-    }, ()=>{});
-  }
-}
-function doCheckout() {
-  if (!checkedIn) { alert('You have not checked in yet today.'); return; }
-  const now = new Date();
-  const t = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
-  document.getElementById('checkinStatus').textContent = '🏁 Checked out at '+t;
-  document.getElementById('checkinStatus').style.color = 'var(--text-muted)';
-  const prev = document.getElementById('checkinLog').textContent;
-  document.getElementById('checkinLog').textContent = prev + ' · Check-out: '+t;
-  checkedIn = false;
-}
-
-function loadSatellite() {
-  const addr = document.getElementById('satelliteAddress').value.trim();
-  if (!addr) { alert('Please enter an address.'); return; }
-  const encoded = encodeURIComponent(addr);
-  document.getElementById('satAddressLabel').textContent = '📍 Showing: '+addr;
-  document.getElementById('satMap').innerHTML = `<iframe src="https://maps.google.com/maps?q=${encoded}&t=k&z=18&output=embed" width="100%" height="340" style="border:none;"></iframe>`;
-  document.getElementById('streetMap').innerHTML = `<iframe src="https://maps.google.com/maps?q=${encoded}&layer=c&cbll=0,0&cbp=12,0,0,0,0&output=svembed" width="100%" height="340" style="border:none;"></iframe>`;
-}
-
-function quickSat(addr) {
-  document.getElementById('satelliteAddress').value = addr;
-  loadSatellite();
-}
-
-function viewSatellite(addr) {
-  showPage('satellite');
-  document.getElementById('satelliteAddress').value = addr;
-  loadSatellite();
-}
-
-function selectCustomer(idx) {
-  const c = CUSTOMERS[idx];
-  document.getElementById('customerDetail').innerHTML = `
-    <div class="card">
-      <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;">
-        <div style="width:52px;height:52px;border-radius:50%;background:var(--forest);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--lime);letter-spacing:1px;">${c.name.split(' ').map(n=>n[0]).join('')}</div>
-        <div><div style="font-size:20px;font-weight:600;">${c.name}</div><div style="font-size:13px;color:var(--text-muted);">${c.address}</div></div>
-        <div style="margin-left:auto;text-align:right;"><span class="badge badge-green">${c.jobs} jobs</span><div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--forest);margin-top:4px;">${c.total}</div></div>
-      </div>
-      <hr class="divider">
-      <table style="width:100%;font-size:13px;">
-        <tr><td style="color:var(--text-muted);padding:6px 0;width:100px;">Phone</td><td style="font-weight:500;">${c.phone}</td></tr>
-        <tr><td style="color:var(--text-muted);padding:6px 0;">Email</td><td style="font-weight:500;">${c.email}</td></tr>
-        <tr><td style="color:var(--text-muted);padding:6px 0;vertical-align:top;">Notes</td><td style="font-size:12px;color:var(--text-muted);">${c.notes}</td></tr>
-      </table>
-      <hr class="divider">
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <button class="btn-submit" onclick="viewSatellite('${c.address}')">🛰 View Site</button>
-        <button class="btn-secondary" onclick="showNewInvoiceModal()">+ New Quote</button>
-        <button class="btn-secondary" onclick="showPage('photos')">📷 Photos</button>
-      </div>
+function showCustomerDetail(idx){
+  const c=CUSTOMERS[idx];
+  document.getElementById('customerDetailContent').innerHTML=`
+    <div class="modal-handle"></div>
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+      <div class="cust-avatar" style="width:52px;height:52px;font-size:18px;">${c.initials}</div>
+      <div style="flex:1;"><div style="font-size:20px;font-weight:700;">${c.name}</div><div style="font-size:13px;color:var(--text-muted);">${c.address}</div></div>
+    </div>
+    <div class="divider"></div>
+    <table style="width:100%;font-size:14px;margin-bottom:14px;">
+      <tr><td style="color:var(--text-muted);padding:6px 0;width:80px;">Phone</td><td><a href="tel:${c.phone}" style="color:var(--leaf);font-weight:500;">${c.phone}</a></td></tr>
+      <tr><td style="color:var(--text-muted);padding:6px 0;">Email</td><td style="font-size:13px;">${c.email}</td></tr>
+      <tr><td style="color:var(--text-muted);padding:6px 0;">Jobs</td><td><strong>${c.jobs}</strong> · ${c.total}</td></tr>
+      <tr><td style="color:var(--text-muted);padding:6px 0;vertical-align:top;">Notes</td><td style="font-size:13px;color:var(--text-muted);">${c.notes}</td></tr>
+    </table>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <button class="btn-submit" onclick="goSat('${c.address}');hideModal('customerDetailModal')">🛰 View Site</button>
+      <button class="btn-submit" style="background:var(--bark);" onclick="showModal('invoiceModal');hideModal('customerDetailModal')">+ Quote</button>
     </div>`;
+  showModal('customerDetailModal');
 }
 
-function showNewInvoiceModal() { document.getElementById('invoiceModal').classList.remove('hidden'); }
-function showAddJobModal() { document.getElementById('addJobModal').classList.remove('hidden'); }
-function showAddCustomerModal() { document.getElementById('addCustomerModal').classList.remove('hidden'); }
-
-function addInvoiceLine() {
-  const idx = lineCount++;
-  document.getElementById('invoiceLines').insertAdjacentHTML('beforeend',`<div class="invoice-line"><input type="text" placeholder="Description" style="flex:1;padding:8px 10px;border:1.5px solid var(--border);border-radius:3px;font-family:'IBM Plex Sans',sans-serif;font-size:13px;"/><input type="number" placeholder="Qty" value="1" style="width:60px;padding:8px 10px;border:1.5px solid var(--border);border-radius:3px;font-family:'IBM Plex Sans',sans-serif;font-size:13px;" oninput="updateTotal(this)"/><input type="number" placeholder="Price" style="width:90px;padding:8px 10px;border:1.5px solid var(--border);border-radius:3px;font-family:'IBM Plex Sans',sans-serif;font-size:13px;" oninput="updateTotal(this)"/><div class="invoice-total" id="lineTotal${idx}">$0</div></div>`);
+function addInvLine(){
+  document.getElementById('invoiceLines').insertAdjacentHTML('beforeend',`<div class="inv-line"><input type="text" class="inv-desc" placeholder="Description"/><input type="number" class="inv-qty" value="1" oninput="calcInvoice()"/><input type="number" class="inv-price" placeholder="$" oninput="calcInvoice()"/><div class="inv-tot">$0</div></div>`);
+}
+function calcInvoice(){
+  let sub=0;
+  document.querySelectorAll('#invoiceLines .inv-line').forEach(line=>{
+    const inputs=line.querySelectorAll('input[type="number"]');
+    const qty=parseFloat(inputs[0].value)||0;
+    const price=parseFloat(inputs[1].value)||0;
+    const t=qty*price;
+    line.querySelector('.inv-tot').textContent='$'+t.toFixed(2);
+    sub+=t;
+  });
+  const tax=sub*0.06;
+  document.getElementById('invSub').textContent='$'+sub.toFixed(2);
+  document.getElementById('invTax').textContent='$'+tax.toFixed(2);
+  document.getElementById('invTotal').textContent='$'+(sub+tax).toFixed(2);
 }
 
-function updateTotal(el) {
-  const line = el.closest('.invoice-line');
-  const inputs = line.querySelectorAll('input[type="number"]');
-  const qty = parseFloat(inputs[0].value)||0;
-  const price = parseFloat(inputs[1].value)||0;
-  const t = qty*price;
-  const totalEl = line.querySelector('.invoice-total');
-  if(totalEl) totalEl.textContent = '$'+t.toFixed(2);
-  let sub = 0;
-  document.querySelectorAll('.invoice-total').forEach(el => { sub += parseFloat(el.textContent.replace('$',''))||0; });
-  const tax = sub*0.06;
-  document.getElementById('invoiceSubtotal').textContent = '$'+sub.toFixed(2);
-  document.getElementById('invoiceTax').textContent = '$'+tax.toFixed(2);
-  document.getElementById('invoiceTotal').textContent = '$'+(sub+tax).toFixed(2);
-}
-
-function handlePhotoSelect(e) {
-  const files = Array.from(e.target.files);
-  const grid = document.getElementById('photoGrid');
-  files.forEach(file => {
-    const reader = new FileReader();
-    reader.onload = ev => {
-      const img = document.createElement('img');
-      img.src = ev.target.result;
-      img.className = 'photo-thumb';
-      img.title = file.name;
-      grid.insertBefore(img, grid.lastElementChild);
+function handlePhotos(e){
+  const files=Array.from(e.target.files);
+  const grid=document.getElementById('photoGrid');
+  files.forEach(file=>{
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      const img=document.createElement('img');
+      img.src=ev.target.result;
+      img.className='photo-thumb';
+      grid.insertBefore(img,grid.lastElementChild);
     };
     reader.readAsDataURL(file);
   });
 }
 
-function handlePhotoDrop(e) {
-  e.preventDefault();
-  document.getElementById('photoDropZone').style.borderColor = '';
-  const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
-  const dt = new DataTransfer();
-  files.forEach(f => dt.items.add(f));
-  document.getElementById('photoFileInput').files = dt.files;
-  handlePhotoSelect({target: {files: dt.files}});
-}
-
-async function sendChat() {
-  const input = document.getElementById('chatInput');
-  const msg = input.value.trim();
-  if (!msg) return;
-  appendMsg(msg,'user');
-  input.value = '';
-  document.getElementById('chatSend').disabled = true;
-  chatHistory.push({role:'user',content:msg});
-  const loadingDiv = appendMsg('...','assistant');
-  try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages',{
+let chatHistory2=[];
+async function sendChat(){
+  const input=document.getElementById('chatInput');
+  const msg=input.value.trim();
+  if(!msg)return;
+  addChatMsg(msg,'user');
+  input.value='';
+  document.getElementById('chatSend').disabled=true;
+  chatHistory2.push({role:'user',content:msg});
+  const loading=addChatMsg('...','asst');
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         model:'claude-sonnet-4-20250514',
-        max_tokens:1000,
-        system:`You are a helpful assistant for Penn West Tree, a professional tree removal and care company in Sharpsville, PA. Help employees with: tree species ID, safe work practices, OSHA arborist regulations, chainsaw/equipment use, emergency procedures, company policies, job site protocols, pricing guidance, and general tree care. Be concise, practical, and safety-first. Speak like a knowledgeable foreman — direct but friendly. Employee: ${currentUser ? currentUser.name+' ('+currentUser.role+')' : 'Unknown'}.`,
-        messages:chatHistory
+        max_tokens:800,
+        system:`You are a helpful assistant for Penn West Tree, a professional tree removal company in Sharpsville, PA. Help with tree care, OSHA safety, chainsaw use, pricing, emergency procedures, and company policies. Be concise and practical. Employee: ${currentUser?currentUser.name+' ('+currentUser.role+')':'Unknown'}.`,
+        messages:chatHistory2
       })
     });
-    const data = await resp.json();
-    const reply = data.content.map(b=>b.text||'').join('');
-    loadingDiv.remove();
-    appendMsg(reply,'assistant');
-    chatHistory.push({role:'assistant',content:reply});
-  } catch(e) {
-    loadingDiv.remove();
-    appendMsg('Sorry, could not connect right now. Try again shortly.','assistant');
-    chatHistory.pop();
+    const data=await r.json();
+    const reply=data.content.map(b=>b.text||'').join('');
+    loading.remove();
+    addChatMsg(reply,'asst');
+    chatHistory2.push({role:'assistant',content:reply});
+  }catch(e){
+    loading.remove();
+    addChatMsg('Could not connect. Try again.','asst');
+    chatHistory2.pop();
   }
-  document.getElementById('chatSend').disabled = false;
+  document.getElementById('chatSend').disabled=false;
 }
-
-function appendMsg(text,cls) {
-  const div = document.createElement('div');
-  div.className = 'msg '+cls;
-  div.textContent = text;
-  const c = document.getElementById('chatMessages');
+function addChatMsg(text,type){
+  const div=document.createElement('div');
+  div.textContent=text;
+  div.style.cssText=type==='user'
+    ?'background:var(--forest);color:var(--cream);padding:10px 14px;border-radius:4px 4px 0 4px;font-size:13px;line-height:1.6;max-width:88%;align-self:flex-end;'
+    :'background:var(--parchment);color:var(--text);padding:10px 14px;border-radius:4px 4px 4px 0;font-size:13px;line-height:1.6;max-width:88%;border:1px solid var(--border);';
+  const c=document.getElementById('chatMessages');
   c.appendChild(div);
-  c.scrollTop = c.scrollHeight;
+  c.scrollTop=c.scrollHeight;
   return div;
 }
-
-function quickChat(q) {
-  document.getElementById('chatInput').value = q;
-  sendChat();
-}
-
-document.addEventListener('keydown', e => {
-  if(e.key==='Escape') {
-    document.getElementById('invoiceModal').classList.add('hidden');
-    document.getElementById('addJobModal').classList.add('hidden');
-    document.getElementById('addCustomerModal').classList.add('hidden');
-  }
-});
+function quickChat(q){document.getElementById('chatInput').value=q;sendChat();}
 </script>
 </body>
 </html>
