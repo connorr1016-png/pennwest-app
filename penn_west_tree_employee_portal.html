@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Penn West Tree — Employee Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #1a2e1a;
+    --bark: #3d2b1f;
+    --moss: #2d4a2d;
+    --leaf: #4a7c3f;
+    --lime: #7ab648;
+    --amber: #c8841a;
+    --amber-light: #f0a93c;
+    --cream: #f5f0e8;
+    --parchment: #ede6d6;
+    --rust: #8b3a1e;
+    --text: #1a1a14;
+    --text-muted: #5a5a4a;
+    --border: rgba(26,46,26,0.18);
+    --card-bg: #ffffff;
+    --bg: #f0ebe0;
+    --danger: #c0392b;
+    --success: #27ae60;
+    --chainsaw: #e8a020;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    background-image: 
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(26,46,26,0.04) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(26,46,26,0.04) 40px);
+  }
+
+  /* HEADER */
+  .app-header {
+    background: var(--forest);
+    color: var(--cream);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    border-bottom: 3px solid var(--lime);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo-icon {
+    width: 36px; height: 36px;
+  }
+  .logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+  .logo-sub {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--lime);
+    font-weight: 500;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .user-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.08);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .user-avatar {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--lime);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; color: var(--forest);
+  }
+  .btn-logout {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.25);
+    color: var(--cream);
+    padding: 6px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: background 0.15s;
+  }
+  .btn-logout:hover { background: rgba(255,255,255,0.1); }
+
+  /* LOGIN SCREEN */
+  .login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--forest);
+    background-image: 
+      radial-gradient(ellipse at 20% 50%, rgba(74,124,63,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(61,43,31,0.3) 0%, transparent 50%);
+    padding: 24px;
+  }
+  .login-card {
+    background: var(--cream);
+    border-radius: 4px;
+    padding: 48px;
+    width: 100%;
+    max-width: 400px;
+    border-top: 5px solid var(--lime);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .login-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 32px;
+    gap: 8px;
+  }
+  .login-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 4px;
+    color: var(--forest);
+    text-align: center;
+    line-height: 1;
+  }
+  .login-tagline {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--leaf);
+    font-weight: 500;
+  }
+  .form-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  .form-input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    background: white;
+    color: var(--text);
+    transition: border-color 0.15s;
+    margin-bottom: 16px;
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: var(--leaf);
+  }
+  .form-group { margin-bottom: 8px; }
+  .btn-primary {
+    width: 100%;
+    padding: 13px;
+    background: var(--forest);
+    color: var(--cream);
+    border: none;
+    border-radius: 3px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.15s;
+  }
+  .btn-primary:hover { background: var(--moss); }
+  .login-hint {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .login-error {
+    background: #fde8e8;
+    border: 1px solid #f5a5a5;
+    color: var(--danger);
+    padding: 10px 14px;
+    border-radius: 3px;
+    font-size: 13px;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  /* MAIN LAYOUT */
+  .app-layout {
+    display: flex;
+    min-height: calc(100vh - 60px);
+  }
+  .sidebar {
+    width: 220px;
+    background: var(--forest);
+    color: var(--cream);
+    flex-shrink: 0;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .nav-section {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    padding: 16px 20px 6px;
+    font-weight: 600;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.7);
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+  .nav-item:hover { background: rgba(255,255,255,0.06); color: white; }
+  .nav-item.active {
+    background: rgba(122,182,72,0.12);
+    color: var(--lime);
+    border-left-color: var(--lime);
+  }
+  .nav-icon { font-size: 14px; width: 16px; text-align: center; }
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 16px 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .weather-chip {
+    background: rgba(255,255,255,0.06);
+    border-radius: 4px;
+    padding: 10px 12px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+  }
+  .weather-temp {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--cream);
+    letter-spacing: 1px;
+  }
+
+  /* CONTENT */
+  .main-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px;
+  }
+  .page-header {
+    margin-bottom: 24px;
+  }
+  .page-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 3px;
+    color: var(--forest);
+    line-height: 1;
+  }
+  .page-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--card-bg);
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+
+  /* STATS GRID */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 18px 20px;
+    border-top: 3px solid var(--leaf);
+  }
+  .stat-card.amber { border-top-color: var(--amber); }
+  .stat-card.rust { border-top-color: var(--rust); }
+  .stat-card.bark { border-top-color: var(--bark); }
+  .stat-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 2px;
+    color: var(--forest);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* FORMS */
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .form-group-inline {
+    margin-bottom: 14px;
+  }
+  .form-select {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    background: white;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .form-select:focus { outline: none; border-color: var(--leaf); }
+  .form-textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    background: white;
+    color: var(--text);
+    resize: vertical;
+    min-height: 80px;
+  }
+  .form-textarea:focus { outline: none; border-color: var(--leaf); }
+  .btn-submit {
+    padding: 11px 28px;
+    background: var(--leaf);
+    color: white;
+    border: none;
+    border-radius: 3px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-submit:hover { background: var(--moss); }
+  .btn-secondary {
+    padding: 10px 20px;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    margin-right: 8px;
+    transition: all 0.15s;
+  }
+  .btn-secondary:hover { border-color: var(--leaf); color: var(--leaf); }
+
+  /* TABLE */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .data-table th {
+    text-align: left;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 8px 12px;
+    border-bottom: 2px solid var(--border);
+  }
+  .data-table td {
+    padding: 11px 12px;
+    border-bottom: 1px solid rgba(26,46,26,0.07);
+    color: var(--text);
+  }
+  .data-table tr:hover td { background: rgba(122,182,72,0.04); }
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .badge-green { background: #e8f5e9; color: #2e7d32; }
+  .badge-amber { background: #fff8e1; color: #f57f17; }
+  .badge-red { background: #fde8e8; color: var(--danger); }
+  .badge-blue { background: #e3f2fd; color: #1565c0; }
+  .badge-gray { background: #f5f5f5; color: #616161; }
+
+  /* SCHEDULE */
+  .schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+  }
+  .day-cell {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 10px 8px;
+    min-height: 90px;
+  }
+  .day-name {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .day-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--forest);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .day-cell.today { border-color: var(--lime); background: rgba(122,182,72,0.05); }
+  .day-cell.today .day-number { color: var(--leaf); }
+  .day-event {
+    background: var(--forest);
+    color: var(--cream);
+    font-size: 9px;
+    padding: 2px 5px;
+    border-radius: 2px;
+    margin-top: 3px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .day-event.amber { background: var(--amber); }
+  .day-event.rust { background: var(--rust); }
+
+  /* JOBS */
+  .job-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: box-shadow 0.15s;
+  }
+  .job-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .job-icon {
+    width: 40px; height: 40px;
+    background: var(--forest);
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .job-title { font-weight: 600; font-size: 14px; color: var(--text); }
+  .job-detail { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+  .job-detail span { margin-right: 14px; }
+  .job-right { margin-left: auto; text-align: right; flex-shrink: 0; }
+
+  /* ANNOUNCEMENTS */
+  .announcement {
+    background: var(--forest);
+    color: var(--cream);
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    border-left: 4px solid var(--lime);
+  }
+  .announcement.warn { border-left-color: var(--amber-light); background: var(--bark); }
+  .ann-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+  .ann-body { font-size: 13px; opacity: 0.75; }
+  .ann-date { font-size: 11px; opacity: 0.5; margin-top: 8px; font-family: 'IBM Plex Mono', monospace; }
+
+  /* SUCCESS MESSAGE */
+  .success-msg {
+    background: #e8f5e9;
+    border: 1px solid #a5d6a7;
+    color: #2e7d32;
+    padding: 12px 16px;
+    border-radius: 3px;
+    font-size: 13px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  /* TIME HISTORY */
+  .time-total {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--forest);
+    letter-spacing: 3px;
+    line-height: 1;
+  }
+  .time-period {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  /* AI ASSISTANT */
+  .chat-messages {
+    max-height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding: 4px 0;
+  }
+  .msg {
+    padding: 10px 14px;
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 1.6;
+    max-width: 90%;
+  }
+  .msg.user {
+    background: var(--forest);
+    color: var(--cream);
+    align-self: flex-end;
+    border-radius: 4px 4px 0 4px;
+  }
+  .msg.assistant {
+    background: var(--parchment);
+    color: var(--text);
+    align-self: flex-start;
+    border-radius: 4px 4px 4px 0;
+    border: 1px solid var(--border);
+  }
+  .msg.loading { opacity: 0.6; }
+  .chat-input-row {
+    display: flex;
+    gap: 8px;
+  }
+  .chat-input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    background: white;
+  }
+  .chat-input:focus { outline: none; border-color: var(--leaf); }
+  .btn-send {
+    padding: 10px 18px;
+    background: var(--forest);
+    color: var(--cream);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.15s;
+  }
+  .btn-send:hover { background: var(--moss); }
+  .btn-send:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+        <rect width="56" height="56" rx="4" fill="#1a2e1a"/>
+        <path d="M28 8 L28 42" stroke="#7ab648" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M28 14 L16 24" stroke="#7ab648" stroke-width="2" stroke-linecap="round"/>
+        <path d="M28 14 L40 24" stroke="#7ab648" stroke-width="2" stroke-linecap="round"/>
+        <path d="M28 22 L18 30" stroke="#4a7c3f" stroke-width="2" stroke-linecap="round"/>
+        <path d="M28 22 L38 30" stroke="#4a7c3f" stroke-width="2" stroke-linecap="round"/>
+        <path d="M28 30 L20 38" stroke="#2d4a2d" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M28 30 L36 38" stroke="#2d4a2d" stroke-width="1.5" stroke-linecap="round"/>
+        <rect x="26" y="42" width="4" height="8" rx="1" fill="#3d2b1f"/>
+      </svg>
+      <div class="login-title">Penn West Tree</div>
+      <div class="login-tagline">Employee Portal · Sharpsville, PA</div>
+    </div>
+    <div id="loginError" class="login-error hidden"></div>
+    <div class="form-group">
+      <label class="form-label">Username</label>
+      <input type="text" class="form-input" id="loginUser" placeholder="firstname.lastname" autocomplete="off"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input type="password" class="form-input" id="loginPass" placeholder="••••••••"/>
+    </div>
+    <button class="btn-primary" onclick="doLogin()">Sign In</button>
+    <div class="login-hint">Demo: mike.jenkins / tree1234<br>or sarah.kowalski / tree1234</div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="appShell" class="hidden">
+  <header class="app-header">
+    <div class="logo">
+      <svg class="logo-icon" width="36" height="36" viewBox="0 0 56 56" fill="none">
+        <path d="M28 4 L28 42" stroke="#7ab648" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M28 10 L16 22" stroke="#7ab648" stroke-width="2" stroke-linecap="round"/>
+        <path d="M28 10 L40 22" stroke="#7ab648" stroke-width="2" stroke-linecap="round"/>
+        <path d="M28 19 L17 30" stroke="#4a7c3f" stroke-width="2" stroke-linecap="round"/>
+        <path d="M28 19 L39 30" stroke="#4a7c3f" stroke-width="2" stroke-linecap="round"/>
+        <rect x="26" y="42" width="4" height="10" rx="1" fill="#3d2b1f"/>
+      </svg>
+      <div>
+        <div class="logo-text">Penn West Tree</div>
+        <div class="logo-sub">Employee Portal</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="user-chip">
+        <div class="user-avatar" id="headerAvatar">MJ</div>
+        <span id="headerName">Mike Jenkins</span>
+        <span style="color:rgba(255,255,255,0.3);font-size:10px;letter-spacing:1px;text-transform:uppercase;" id="headerRole">Crew</span>
+      </div>
+      <button class="btn-logout" onclick="doLogout()">Sign Out</button>
+    </div>
+  </header>
+
+  <div class="app-layout">
+    <!-- SIDEBAR -->
+    <nav class="sidebar">
+      <div class="nav-section">Main</div>
+      <div class="nav-item active" onclick="showPage('dashboard')"><span class="nav-icon">⊞</span> Dashboard</div>
+      <div class="nav-item" onclick="showPage('hours')"><span class="nav-icon">⏱</span> Log Hours</div>
+      <div class="nav-item" onclick="showPage('schedule')"><span class="nav-icon">📅</span> Schedule</div>
+      <div class="nav-item" onclick="showPage('jobs')"><span class="nav-icon">🪵</span> Job Board</div>
+      <div class="nav-section">Tools</div>
+      <div class="nav-item" onclick="showPage('incidents')"><span class="nav-icon">⚠</span> Safety Reports</div>
+      <div class="nav-item" onclick="showPage('equipment')"><span class="nav-icon">🔧</span> Equipment</div>
+      <div class="nav-item" onclick="showPage('ai')"><span class="nav-icon">🌿</span> AI Assistant</div>
+      <div id="adminNavSection" class="hidden">
+        <div class="nav-section">Admin</div>
+        <div class="nav-item" onclick="showPage('admin')"><span class="nav-icon">👥</span> All Employees</div>
+      </div>
+      <div class="sidebar-footer">
+        <div class="weather-chip">
+          <div style="font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:2px;">Sharpsville, PA</div>
+          <div class="weather-temp" id="weatherTemp">64°F</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.5);" id="weatherDesc">Partly Cloudy</div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- PAGES -->
+    <main class="main-content">
+
+      <!-- DASHBOARD -->
+      <div id="page-dashboard">
+        <div class="page-header">
+          <div class="page-title" id="dashGreeting">Good Morning, Mike</div>
+          <div class="page-subtitle" id="dashDate">Monday, April 21, 2025</div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value" id="statHoursWeek">38.5</div>
+            <div class="stat-label">Hours This Week</div>
+          </div>
+          <div class="stat-card amber">
+            <div class="stat-value" id="statJobsToday">2</div>
+            <div class="stat-label">Jobs Today</div>
+          </div>
+          <div class="stat-card rust">
+            <div class="stat-value" id="statPTO">3</div>
+            <div class="stat-label">PTO Days Left</div>
+          </div>
+          <div class="stat-card bark">
+            <div class="stat-value" id="statStreak">12</div>
+            <div class="stat-label">Day Streak</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <div class="card">
+              <div class="card-title">Today's Assignments</div>
+              <div class="job-card" style="padding:12px 0;border:none;margin-bottom:8px;">
+                <div class="job-icon">🌲</div>
+                <div>
+                  <div class="job-title">Tree Removal — 412 Oak St</div>
+                  <div class="job-detail"><span>8:00 AM</span><span>Crew of 3</span></div>
+                </div>
+                <div class="job-right"><span class="badge badge-green">Active</span></div>
+              </div>
+              <hr class="divider" style="margin:8px 0;">
+              <div class="job-card" style="padding:12px 0;border:none;">
+                <div class="job-icon">✂️</div>
+                <div>
+                  <div class="job-title">Pruning — 88 Maple Ave</div>
+                  <div class="job-detail"><span>1:00 PM</span><span>Crew of 2</span></div>
+                </div>
+                <div class="job-right"><span class="badge badge-amber">Upcoming</span></div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+              <div class="card-title">Announcements</div>
+              <div class="announcement">
+                <div class="ann-title">Safety Briefing — Friday</div>
+                <div class="ann-body">Mandatory chainsaw certification renewal at 7 AM in the yard.</div>
+                <div class="ann-date">Apr 18, 2025</div>
+              </div>
+              <div class="announcement warn">
+                <div class="ann-title">⚠ Weather Alert</div>
+                <div class="ann-body">High winds forecast Thurs–Fri. Check job assignments before heading out.</div>
+                <div class="ann-date">Apr 19, 2025</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOG HOURS -->
+      <div id="page-hours" class="hidden">
+        <div class="page-header">
+          <div class="page-title">Log Hours</div>
+          <div class="page-subtitle">Record your work time for each job</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <div class="card">
+              <div class="card-title">New Time Entry</div>
+              <div id="hoursSuccess" class="success-msg hidden">✓ Time entry submitted successfully.</div>
+              <div class="form-group-inline">
+                <label class="form-label">Date</label>
+                <input type="date" class="form-input" id="entryDate" style="margin-bottom:0;"/>
+              </div>
+              <div class="form-row" style="margin-top:14px;">
+                <div>
+                  <label class="form-label">Time In</label>
+                  <input type="time" class="form-input" id="entryIn" style="margin-bottom:0;"/>
+                </div>
+                <div>
+                  <label class="form-label">Time Out</label>
+                  <input type="time" class="form-input" id="entryOut" style="margin-bottom:0;"/>
+                </div>
+              </div>
+              <div class="form-group-inline" style="margin-top:14px;">
+                <label class="form-label">Job / Location</label>
+                <select class="form-select" id="entryJob">
+                  <option>412 Oak St — Tree Removal</option>
+                  <option>88 Maple Ave — Pruning</option>
+                  <option>207 Pine Rd — Stump Grinding</option>
+                  <option>Shop / Yard Work</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="form-group-inline" style="margin-top:12px;">
+                <label class="form-label">Work Type</label>
+                <select class="form-select" id="entryType">
+                  <option>Regular</option>
+                  <option>Overtime</option>
+                  <option>Travel</option>
+                  <option>Training</option>
+                </select>
+              </div>
+              <div class="form-group-inline" style="margin-top:12px;">
+                <label class="form-label">Notes (optional)</label>
+                <textarea class="form-textarea" id="entryNotes" placeholder="Any details about the work done..."></textarea>
+              </div>
+              <div style="margin-top:16px;">
+                <button class="btn-submit" onclick="submitHours()">Submit Entry</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+              <div style="display:flex;align-items:flex-end;gap:16px;margin-bottom:16px;">
+                <div>
+                  <div class="time-total" id="totalHours">38.5</div>
+                  <div class="time-period">Hours this week</div>
+                </div>
+                <div style="margin-bottom:6px;">
+                  <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--amber);letter-spacing:2px;" id="otHours">1.5</div>
+                  <div class="time-period">Overtime</div>
+                </div>
+              </div>
+              <hr class="divider">
+              <div class="card-title">Recent Entries</div>
+              <table class="data-table" id="hoursTable">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Job</th>
+                    <th>Hours</th>
+                    <th>Type</th>
+                  </tr>
+                </thead>
+                <tbody id="hoursTableBody">
+                  <tr><td>Apr 20</td><td>412 Oak St</td><td>8.0</td><td><span class="badge badge-green">Regular</span></td></tr>
+                  <tr><td>Apr 19</td><td>88 Maple Ave</td><td>6.5</td><td><span class="badge badge-green">Regular</span></td></tr>
+                  <tr><td>Apr 18</td><td>Shop/Yard</td><td>8.5</td><td><span class="badge badge-amber">Overtime</span></td></tr>
+                  <tr><td>Apr 17</td><td>207 Pine Rd</td><td>7.5</td><td><span class="badge badge-green">Regular</span></td></tr>
+                  <tr><td>Apr 16</td><td>412 Oak St</td><td>8.0</td><td><span class="badge badge-green">Regular</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCHEDULE -->
+      <div id="page-schedule" class="hidden">
+        <div class="page-header">
+          <div class="page-title">Weekly Schedule</div>
+          <div class="page-subtitle">April 20 – 26, 2025</div>
+        </div>
+        <div class="card">
+          <div class="schedule-grid">
+            <div class="day-cell today">
+              <div class="day-name">Sun</div>
+              <div class="day-number">20</div>
+              <div class="day-event">412 Oak St</div>
+              <div class="day-event amber">1PM Pruning</div>
+            </div>
+            <div class="day-cell today">
+              <div class="day-name">Mon</div>
+              <div class="day-number">21</div>
+              <div class="day-event">8AM Oak St</div>
+              <div class="day-event amber">1PM Maple</div>
+            </div>
+            <div class="day-cell">
+              <div class="day-name">Tue</div>
+              <div class="day-number">22</div>
+              <div class="day-event">Pine Rd Stump</div>
+            </div>
+            <div class="day-cell">
+              <div class="day-name">Wed</div>
+              <div class="day-number">23</div>
+              <div class="day-event">Shop Day</div>
+            </div>
+            <div class="day-cell">
+              <div class="day-name">Thu</div>
+              <div class="day-number">24</div>
+              <div class="day-event rust">⚠ Wind Alert</div>
+            </div>
+            <div class="day-cell">
+              <div class="day-name">Fri</div>
+              <div class="day-number">25</div>
+              <div class="day-event rust">⚠ Wind Alert</div>
+              <div class="day-event">7AM Safety</div>
+            </div>
+            <div class="day-cell">
+              <div class="day-name">Sat</div>
+              <div class="day-number">26</div>
+              <div style="font-size:11px;color:var(--text-muted);margin-top:6px;">Off</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Upcoming Jobs</div>
+          <table class="data-table">
+            <thead>
+              <tr><th>Date</th><th>Job</th><th>Address</th><th>Crew</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Apr 21</td><td>Tree Removal</td><td>412 Oak St</td><td>Jenkins, Kowalski, Davis</td><td><span class="badge badge-green">Confirmed</span></td></tr>
+              <tr><td>Apr 21</td><td>Pruning</td><td>88 Maple Ave</td><td>Jenkins, Kowalski</td><td><span class="badge badge-green">Confirmed</span></td></tr>
+              <tr><td>Apr 22</td><td>Stump Grinding</td><td>207 Pine Rd</td><td>Davis</td><td><span class="badge badge-amber">Pending</span></td></tr>
+              <tr><td>Apr 24</td><td>Emergency Removal</td><td>55 Elm Dr</td><td>TBD</td><td><span class="badge badge-red">Weather Hold</span></td></tr>
+              <tr><td>Apr 25</td><td>Safety Training</td><td>Company Yard</td><td>All Crew</td><td><span class="badge badge-blue">Training</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- JOB BOARD -->
+      <div id="page-jobs" class="hidden">
+        <div class="page-header">
+          <div class="page-title">Job Board</div>
+          <div class="page-subtitle">Active and upcoming service orders</div>
+        </div>
+
+        <div class="job-card">
+          <div class="job-icon">🌲</div>
+          <div style="flex:1;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div class="job-title">Large Oak Removal</div>
+              <span class="badge badge-green">In Progress</span>
+            </div>
+            <div class="job-detail">
+              <span>📍 412 Oak Street, Sharpsville</span>
+              <span>👥 Jenkins, Kowalski, Davis</span>
+              <span>📅 Apr 21–22</span>
+            </div>
+            <div class="job-detail" style="margin-top:4px;">Estimated 60ft oak over driveway. Crane required. Customer: R. Battaglia</div>
+          </div>
+          <div class="job-right">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--forest);">$1,850</div>
+            <div style="font-size:11px;color:var(--text-muted);">Est. value</div>
+          </div>
+        </div>
+
+        <div class="job-card">
+          <div class="job-icon">✂️</div>
+          <div style="flex:1;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div class="job-title">Seasonal Pruning</div>
+              <span class="badge badge-amber">Scheduled</span>
+            </div>
+            <div class="job-detail">
+              <span>📍 88 Maple Avenue, Sharpsville</span>
+              <span>👥 Jenkins, Kowalski</span>
+              <span>📅 Apr 21 PM</span>
+            </div>
+            <div class="job-detail" style="margin-top:4px;">5 maple trees, deadwood removal. Customer: T. Ostrowski</div>
+          </div>
+          <div class="job-right">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--forest);">$620</div>
+            <div style="font-size:11px;color:var(--text-muted);">Est. value</div>
+          </div>
+        </div>
+
+        <div class="job-card">
+          <div class="job-icon">🪨</div>
+          <div style="flex:1;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div class="job-title">Stump Grinding</div>
+              <span class="badge badge-gray">Pending</span>
+            </div>
+            <div class="job-detail">
+              <span>📍 207 Pine Road, Sharon</span>
+              <span>👥 Davis</span>
+              <span>📅 Apr 22</span>
+            </div>
+            <div class="job-detail" style="margin-top:4px;">3 stumps from previous removal. Customer: M. Santoro</div>
+          </div>
+          <div class="job-right">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--forest);">$280</div>
+            <div style="font-size:11px;color:var(--text-muted);">Est. value</div>
+          </div>
+        </div>
+
+        <div class="job-card">
+          <div class="job-icon">🆘</div>
+          <div style="flex:1;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div class="job-title">Emergency Tree Down</div>
+              <span class="badge badge-red">Weather Hold</span>
+            </div>
+            <div class="job-detail">
+              <span>📍 55 Elm Drive, Hermitage</span>
+              <span>👥 TBD</span>
+              <span>📅 Apr 24 (hold)</span>
+            </div>
+            <div class="job-detail" style="margin-top:4px;">Storm-downed elm blocking road. Awaiting wind clearance.</div>
+          </div>
+          <div class="job-right">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--rust);">TBD</div>
+            <div style="font-size:11px;color:var(--text-muted);">Emergency rate</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SAFETY INCIDENTS -->
+      <div id="page-incidents" class="hidden">
+        <div class="page-header">
+          <div class="page-title">Safety Reports</div>
+          <div class="page-subtitle">Report incidents, near-misses, and hazards immediately</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <div class="card">
+              <div class="card-title">File a Safety Report</div>
+              <div id="safetySuccess" class="success-msg hidden">✓ Safety report submitted. Management has been notified.</div>
+              <div class="form-group-inline">
+                <label class="form-label">Incident Type</label>
+                <select class="form-select" id="incidentType">
+                  <option>Near-Miss</option>
+                  <option>Minor Injury</option>
+                  <option>Equipment Issue</option>
+                  <option>Hazard Observed</option>
+                  <option>Property Damage</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="form-group-inline" style="margin-top:12px;">
+                <label class="form-label">Date & Time</label>
+                <input type="datetime-local" class="form-input" id="incidentDate" style="margin-bottom:0;"/>
+              </div>
+              <div class="form-group-inline" style="margin-top:12px;">
+                <label class="form-label">Location</label>
+                <input type="text" class="form-input" id="incidentLoc" placeholder="Job site address or yard" style="margin-bottom:0;"/>
+              </div>
+              <div class="form-group-inline" style="margin-top:12px;">
+                <label class="form-label">Description</label>
+                <textarea class="form-textarea" id="incidentDesc" placeholder="Describe what happened in detail..." style="min-height:100px;"></textarea>
+              </div>
+              <div class="form-group-inline" style="margin-top:12px;">
+                <label class="form-label">Injuries / Damage</label>
+                <textarea class="form-textarea" id="incidentInjury" placeholder="List any injuries or damage..."></textarea>
+              </div>
+              <div style="margin-top:16px;">
+                <button class="btn-submit" onclick="submitIncident()" style="background:var(--rust);">Submit Report</button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+              <div class="card-title">Recent Reports</div>
+              <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:3px;padding:10px 14px;margin-bottom:12px;">
+                <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#f57f17;">Near-Miss — Apr 15</div>
+                <div style="font-size:13px;color:var(--text);margin-top:4px;">Falling branch came within 10ft of crew member during removal at Elm Dr. Hard hats in place, no injury.</div>
+                <div style="font-size:11px;color:var(--text-muted);margin-top:6px;">Filed by: T. Davis</div>
+              </div>
+              <div style="background:#fde8e8;border:1px solid #f5a5a5;border-radius:3px;padding:10px 14px;margin-bottom:12px;">
+                <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--danger);">Equipment Issue — Apr 10</div>
+                <div style="font-size:13px;color:var(--text);margin-top:4px;">Chainsaw chain guard loose on Stihl MS 400. Taken out of service. Sent for repair.</div>
+                <div style="font-size:11px;color:var(--text-muted);margin-top:6px;">Filed by: M. Jenkins</div>
+              </div>
+              <div style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:3px;padding:10px 14px;">
+                <div style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#2e7d32;">Hazard Cleared — Apr 7</div>
+                <div style="font-size:13px;color:var(--text);margin-top:4px;">Wasp nest found at 412 Oak St job site. Site cleared, nest treated before work resumed.</div>
+                <div style="font-size:11px;color:var(--text-muted);margin-top:6px;">Filed by: S. Kowalski</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EQUIPMENT -->
+      <div id="page-equipment" class="hidden">
+        <div class="page-header">
+          <div class="page-title">Equipment Tracker</div>
+          <div class="page-subtitle">Check out tools and report issues</div>
+        </div>
+
+        <div class="card" style="margin-bottom:16px;">
+          <div class="card-title">Fleet & Equipment Status</div>
+          <table class="data-table">
+            <thead>
+              <tr><th>Item</th><th>ID</th><th>Status</th><th>Assigned To</th><th>Last Service</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Stihl MS 400 Chainsaw</td><td style="font-family:'IBM Plex Mono',monospace;font-size:12px;">CS-001</td>
+                <td><span class="badge badge-green">Available</span></td><td>—</td><td>Mar 15</td>
+              </tr>
+              <tr>
+                <td>Stihl MS 400 Chainsaw</td><td style="font-family:'IBM Plex Mono',monospace;font-size:12px;">CS-002</td>
+                <td><span class="badge badge-red">Out of Service</span></td><td>Repair Shop</td><td>—</td>
+              </tr>
+              <tr>
+                <td>Vermeer BC1500 Chipper</td><td style="font-family:'IBM Plex Mono',monospace;font-size:12px;">CH-001</td>
+                <td><span class="badge badge-amber">In Use</span></td><td>M. Jenkins</td><td>Apr 1</td>
+              </tr>
+              <tr>
+                <td>Toro Stump Grinder</td><td style="font-family:'IBM Plex Mono',monospace;font-size:12px;">SG-001</td>
+                <td><span class="badge badge-green">Available</span></td><td>—</td><td>Apr 5</td>
+              </tr>
+              <tr>
+                <td>F-350 Truck (White)</td><td style="font-family:'IBM Plex Mono',monospace;font-size:12px;">TK-001</td>
+                <td><span class="badge badge-amber">In Use</span></td><td>T. Davis</td><td>Apr 10</td>
+              </tr>
+              <tr>
+                <td>F-350 Truck (Green)</td><td style="font-family:'IBM Plex Mono',monospace;font-size:12px;">TK-002</td>
+                <td><span class="badge badge-green">Available</span></td><td>—</td><td>Apr 12</td>
+              </tr>
+              <tr>
+                <td>Extension Ladder 24ft</td><td style="font-family:'IBM Plex Mono',monospace;font-size:12px;">LD-001</td>
+                <td><span class="badge badge-green">Available</span></td><td>—</td><td>Feb 20</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Request / Check Out Equipment</div>
+          <div id="equipSuccess" class="success-msg hidden">✓ Request submitted to yard manager.</div>
+          <div class="form-row">
+            <div>
+              <label class="form-label">Equipment</label>
+              <select class="form-select" id="equipItem">
+                <option>CS-001 — Stihl MS 400 Chainsaw</option>
+                <option>CH-001 — Vermeer BC1500 Chipper</option>
+                <option>SG-001 — Toro Stump Grinder</option>
+                <option>TK-002 — F-350 Truck (Green)</option>
+                <option>LD-001 — Extension Ladder 24ft</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label">Job Site</label>
+              <input type="text" class="form-input" id="equipJob" placeholder="Address or job name" style="margin-bottom:0;"/>
+            </div>
+          </div>
+          <div style="margin-top:14px;">
+            <button class="btn-submit" onclick="submitEquip()">Check Out</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI ASSISTANT -->
+      <div id="page-ai" class="hidden">
+        <div class="page-header">
+          <div class="page-title">AI Assistant</div>
+          <div class="page-subtitle">Ask questions about safety, tree care, company policies, and more</div>
+        </div>
+        <div class="card">
+          <div class="chat-messages" id="chatMessages">
+            <div class="msg assistant">Hey there! I'm the Penn West Tree assistant. I can help with tree care questions, safety procedures, OSHA guidelines, job site tips, equipment questions, and anything else you need. What can I help you with?</div>
+          </div>
+          <hr class="divider" style="margin:12px 0;">
+          <div class="chat-input-row">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Ask about safety, tree species, equipment, policies..." onkeydown="if(event.key==='Enter')sendChat()"/>
+            <button class="btn-send" id="chatSend" onclick="sendChat()">Send</button>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn-secondary" style="font-size:11px;padding:6px 12px;" onclick="quickChat('What are OSHA requirements for tree work?')">OSHA Requirements</button>
+            <button class="btn-secondary" style="font-size:11px;padding:6px 12px;" onclick="quickChat('How do I safely use a chainsaw?')">Chainsaw Safety</button>
+            <button class="btn-secondary" style="font-size:11px;padding:6px 12px;" onclick="quickChat('How do I identify a hazard tree?')">Hazard Trees</button>
+            <button class="btn-secondary" style="font-size:11px;padding:6px 12px;" onclick="quickChat('What is the company PTO policy?')">PTO Policy</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN -->
+      <div id="page-admin" class="hidden">
+        <div class="page-header">
+          <div class="page-title">Employee Overview</div>
+          <div class="page-subtitle">All staff hours and status — Admin View</div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-value">5</div><div class="stat-label">Active Employees</div></div>
+          <div class="stat-card amber"><div class="stat-value">192</div><div class="stat-label">Total Hours This Week</div></div>
+          <div class="stat-card rust"><div class="stat-value">3</div><div class="stat-label">Jobs In Progress</div></div>
+          <div class="stat-card bark"><div class="stat-value">1</div><div class="stat-label">Open Safety Reports</div></div>
+        </div>
+        <div class="card">
+          <div class="card-title">All Employees — Hours This Week</div>
+          <table class="data-table">
+            <thead>
+              <tr><th>Employee</th><th>Role</th><th>Regular</th><th>OT</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Mike Jenkins</strong></td><td>Lead Climber</td><td>37.0</td><td>1.5</td><td><span class="badge badge-green">On Site</span></td></tr>
+              <tr><td>Sarah Kowalski</td><td>Ground Crew</td><td>40.0</td><td>2.0</td><td><span class="badge badge-green">On Site</span></td></tr>
+              <tr><td>Tom Davis</td><td>Equipment Op.</td><td>38.5</td><td>0</td><td><span class="badge badge-green">On Site</span></td></tr>
+              <tr><td>Carlos Reyes</td><td>Ground Crew</td><td>36.0</td><td>0</td><td><span class="badge badge-amber">Off Today</span></td></tr>
+              <tr><td>Dana Polk</td><td>Admin</td><td>40.0</td><td>0</td><td><span class="badge badge-blue">Office</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+const USERS = {
+  'mike.jenkins': { pass: 'tree1234', name: 'Mike Jenkins', role: 'Lead Climber', initials: 'MJ', isAdmin: false },
+  'sarah.kowalski': { pass: 'tree1234', name: 'Sarah Kowalski', role: 'Ground Crew', initials: 'SK', isAdmin: false },
+  'admin': { pass: 'admin123', name: 'Dana Polk', role: 'Admin', initials: 'DP', isAdmin: true }
+};
+
+let currentUser = null;
+let currentPage = 'dashboard';
+
+function doLogin() {
+  const u = document.getElementById('loginUser').value.trim().toLowerCase();
+  const p = document.getElementById('loginPass').value;
+  const err = document.getElementById('loginError');
+  if (USERS[u] && USERS[u].pass === p) {
+    currentUser = { username: u, ...USERS[u] };
+    err.classList.add('hidden');
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('appShell').classList.remove('hidden');
+    setupUser();
+  } else {
+    err.textContent = 'Invalid username or password. Try again.';
+    err.classList.remove('hidden');
+  }
+}
+
+document.getElementById('loginPass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+function setupUser() {
+  document.getElementById('headerAvatar').textContent = currentUser.initials;
+  document.getElementById('headerName').textContent = currentUser.name;
+  document.getElementById('headerRole').textContent = currentUser.role;
+  const fn = currentUser.name.split(' ')[0];
+  const h = new Date().getHours();
+  const greet = h < 12 ? 'Good Morning' : h < 17 ? 'Good Afternoon' : 'Good Evening';
+  document.getElementById('dashGreeting').textContent = greet + ', ' + fn;
+  document.getElementById('dashDate').textContent = new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('entryDate').value = today;
+  const now = new Date();
+  document.getElementById('entryIn').value = now.getHours().toString().padStart(2,'0')+':00';
+  document.getElementById('entryOut').value = '';
+  document.getElementById('incidentDate').value = now.toISOString().slice(0,16);
+  if (currentUser.isAdmin) {
+    document.getElementById('adminNavSection').classList.remove('hidden');
+  }
+  simulateWeather();
+}
+
+function simulateWeather() {
+  const temps = ['61°F','64°F','58°F','72°F','55°F'];
+  const descs = ['Partly Cloudy','Overcast','Light Rain','Sunny','Windy'];
+  const i = Math.floor(Math.random()*temps.length);
+  document.getElementById('weatherTemp').textContent = temps[i];
+  document.getElementById('weatherDesc').textContent = descs[i];
+}
+
+function doLogout() {
+  currentUser = null;
+  document.getElementById('appShell').classList.add('hidden');
+  document.getElementById('loginScreen').classList.remove('hidden');
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+  document.getElementById('chatMessages').innerHTML = '<div class="msg assistant">Hey there! I\'m the Penn West Tree assistant. I can help with tree care questions, safety procedures, OSHA guidelines, job site tips, equipment questions, and anything else you need. What can I help you with?</div>';
+}
+
+function showPage(page) {
+  document.querySelectorAll('[id^="page-"]').forEach(p => p.classList.add('hidden'));
+  document.getElementById('page-' + page).classList.remove('hidden');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const items = document.querySelectorAll('.nav-item');
+  items.forEach(item => {
+    if (item.getAttribute('onclick') && item.getAttribute('onclick').includes("'"+page+"'")) {
+      item.classList.add('active');
+    }
+  });
+  currentPage = page;
+}
+
+function submitHours() {
+  const date = document.getElementById('entryDate').value;
+  const inT = document.getElementById('entryIn').value;
+  const outT = document.getElementById('entryOut').value;
+  const job = document.getElementById('entryJob').value;
+  const type = document.getElementById('entryType').value;
+  if (!date || !inT || !outT) { alert('Please fill in date, time in, and time out.'); return; }
+  const [ih, im] = inT.split(':').map(Number);
+  const [oh, om] = outT.split(':').map(Number);
+  const hrs = ((oh*60+om) - (ih*60+im)) / 60;
+  if (hrs <= 0) { alert('Time out must be after time in.'); return; }
+  const tbody = document.getElementById('hoursTableBody');
+  const shortDate = new Date(date+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  const shortJob = job.split('—')[0].trim();
+  const badgeClass = type==='Regular' ? 'badge-green' : type==='Overtime' ? 'badge-amber' : 'badge-blue';
+  const row = `<tr><td>${shortDate}</td><td>${shortJob}</td><td>${hrs.toFixed(1)}</td><td><span class="badge ${badgeClass}">${type}</span></td></tr>`;
+  tbody.insertAdjacentHTML('afterbegin', row);
+  const prev = parseFloat(document.getElementById('totalHours').textContent);
+  document.getElementById('totalHours').textContent = (prev + hrs).toFixed(1);
+  document.getElementById('hoursSuccess').classList.remove('hidden');
+  setTimeout(() => document.getElementById('hoursSuccess').classList.add('hidden'), 3000);
+  document.getElementById('entryNotes').value = '';
+}
+
+function submitIncident() {
+  const type = document.getElementById('incidentType').value;
+  const loc = document.getElementById('incidentLoc').value;
+  const desc = document.getElementById('incidentDesc').value;
+  if (!loc || !desc) { alert('Please fill in location and description.'); return; }
+  document.getElementById('safetySuccess').classList.remove('hidden');
+  setTimeout(() => document.getElementById('safetySuccess').classList.add('hidden'), 4000);
+  document.getElementById('incidentLoc').value = '';
+  document.getElementById('incidentDesc').value = '';
+  document.getElementById('incidentInjury').value = '';
+}
+
+function submitEquip() {
+  document.getElementById('equipSuccess').classList.remove('hidden');
+  setTimeout(() => document.getElementById('equipSuccess').classList.add('hidden'), 3000);
+  document.getElementById('equipJob').value = '';
+}
+
+let chatHistory = [];
+
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  appendMsg(msg, 'user');
+  input.value = '';
+  document.getElementById('chatSend').disabled = true;
+  chatHistory.push({ role: 'user', content: msg });
+  const loadingDiv = appendMsg('...', 'assistant loading');
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: `You are a helpful assistant for Penn West Tree, a professional tree removal and care company in Sharpsville, PA. You help employees with questions about: tree species identification, safe work practices, OSHA arborist regulations, chainsaw and equipment use, emergency procedures, company policies (PTO, hours, conduct), job site protocols, and general tree care advice. Be concise, practical, and safety-first. Speak like a knowledgeable foreman — direct but friendly. Current employee: ${currentUser ? currentUser.name + ' (' + currentUser.role + ')' : 'Unknown'}.`,
+        messages: chatHistory
+      })
+    });
+    const data = await resp.json();
+    const reply = data.content.map(b => b.text || '').join('');
+    loadingDiv.remove();
+    appendMsg(reply, 'assistant');
+    chatHistory.push({ role: 'assistant', content: reply });
+  } catch(e) {
+    loadingDiv.remove();
+    appendMsg('Sorry, could not connect to the assistant right now. Try again shortly.', 'assistant');
+    chatHistory.pop();
+  }
+  document.getElementById('chatSend').disabled = false;
+}
+
+function appendMsg(text, cls) {
+  const div = document.createElement('div');
+  div.className = 'msg ' + cls;
+  div.textContent = text;
+  const container = document.getElementById('chatMessages');
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return div;
+}
+
+function quickChat(q) {
+  document.getElementById('chatInput').value = q;
+  sendChat();
+}
+</script>
+</body>
+</html>
